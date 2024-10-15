@@ -6,7 +6,8 @@ body {
 }
 
 .container {
-    width: 80%;
+    width: 90%; /* Adjusted to 90% for better mobile responsiveness */
+    max-width: 1200px; /* Optional: limit max width */
     margin: auto;
     padding: 20px;
 }
@@ -19,7 +20,7 @@ body {
 }
 
 .navbar-brand {
-    font-size: 24px;
+    font-size: 1.5em; /* Using em for scalability */
     color: #CCD0CF;
     text-decoration: none;
 }
@@ -30,6 +31,7 @@ body {
     margin: 0;
     display: flex;
     justify-content: flex-end;
+    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
 }
 
 .nav-item {
@@ -55,7 +57,7 @@ body {
 }
 
 .hero h1 {
-    font-size: 36px;
+    font-size: 2.25em; /* Using em for scalability */
     color: #333;
 }
 
@@ -68,12 +70,42 @@ body {
     display: flex;
     justify-content: space-around;
     text-align: center;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
 
-.features h3, .hero p {
+.features h3,
+.hero p {
     color: #333;
 }
 
 .features p {
     color: #666;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .container {
+        width: 95%; /* More width for smaller devices */
+    }
+
+    .navbar-nav {
+        flex-direction: column; /* Stack items vertically */
+        align-items: center; /* Center items */
+    }
+
+    .nav-item {
+        margin: 10px 0; /* Adjust spacing for stacked items */
+    }
+
+    .hero h1 {
+        font-size: 1.75em; /* Adjust heading size for mobile */
+    }
+
+    .features .row {
+        flex-direction: column; /* Stack features vertically */
+    }
+
+    .features h3 {
+        margin: 20px 0 10px; /* Add spacing between titles and paragraphs */
+    }
 }
