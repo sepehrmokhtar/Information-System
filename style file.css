@@ -1,0 +1,135 @@
+body { 
+    background: #EEE; 
+    overflow-x: hidden;
+}
+
+.clearfix:before,
+.clearfix:after {
+    content: " ";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both;
+}
+
+.clearfix {
+    *zoom: 1;
+}
+
+.container {
+    position: relative;
+    margin: 0 auto;
+    padding: 50px 0;
+    clear: both;
+}
+
+@media only screen and (min-width: 1200px) {
+    .container {
+        width: 1210px;
+    }
+}
+
+@media only screen and (min-width: 960px) and (max-width: 1199px) {
+    .container {
+        width: 1030px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+    .container {
+        width: 682px;
+    }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+    .container {
+        width: 428px;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width: 479px) {
+    .container {
+        width: 320px;
+        margin: 0 auto;
+    }
+}
+
+.mcd-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #FFF;
+    border-radius: 2px;
+    width: 250px;
+}
+
+.mcd-menu li {
+    position: relative;
+}
+
+.mcd-menu li a {
+    display: block;
+    text-decoration: none;
+    padding: 12px 20px;
+    color: #777;
+    text-align: left;
+    height: 36px;
+    position: relative;
+    border-bottom: 1px solid #EEE;
+}
+
+.mcd-menu li a i {
+    float: left;
+    font-size: 20px;
+    margin: 0 10px 0 0;
+}
+
+.mcd-menu li a p {
+    float: left;
+    margin: 0;
+}
+
+.mcd-menu li a strong {
+    display: block;
+    text-transform: uppercase;
+}
+
+.mcd-menu li a small {
+    display: block;
+    font-size: 10px;
+}
+
+.mcd-menu li:hover > a {
+    color: #e67e22;
+}
+
+.mcd-menu li a.active {
+    color: #e67e22;
+    border-left: 4px solid #e67e22;
+    border-right: 4px solid #e67e22;
+    margin: 0 -4px;
+}
+
+.mcd-menu li ul {
+    position: absolute;
+    background: #FFF;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 300ms linear;
+    left: 250px;
+    top: 0;
+    z-index: 1000;
+}
+
+.mcd-menu li:hover > ul {
+    opacity: 1;
+    visibility: visible;
+}
+
+@media only screen and (max-width: 768px) {
+    .mcd-menu {
+        width: 100%;
+    }
+}
