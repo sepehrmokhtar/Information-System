@@ -1,0 +1,79 @@
+/* Global Styles */
+body {
+    background: #CCD0CF;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+/* Navbar Styles */
+.navbar {
+    background: #06141b;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 15px 0;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    color: #CCD0CF;
+    text-decoration: none;
+}
+
+.navbar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.nav-item {
+    margin-left: 20px;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: #777;
+    padding: 8px 15px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #aca8a4;
+}
+
+/* Hero Section */
+.hero {
+    background: #f9f9f9;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 36px;
+    color: #333;
+}
+
+/* Features Section */
+.features {
+    padding: 60px 0;
+}
+
+.features .row {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.features h3, .hero p {
+    color: #333;
+}
+
+.features p {
+    color: #666;
+}
