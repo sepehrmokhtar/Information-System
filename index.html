@@ -4,29 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EHR System - Homepage</title>
-    <!-- Bootstrap CSS -->
     <link href="style-css-method.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <nav class="navbar">
-        <div class="container">
-            <a class="navbar-brand" href="#">EHR System</a>
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Doctor Registration</a></li>
-            </ul>
-        </div>
+    <!-- Sidebar Navigation Bar -->
+    <nav class="sidebar">
+        <a class="navbar-brand" href="#">EHR System</a>
+        <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">About Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">Doctor Registration</a></li>
+        </ul>
     </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
+    <!-- Main Content -->
+    <div class="main-content">
+        <section class="hero">
             <h1>Welcome to our EHR System</h1>
-            <!-- Embedded YouTube Video -->
             <div class="video-wrapper">
                 <iframe width="560" height="315" 
                     src="https://www.youtube.com/embed/t8a7XO7MuQE" 
@@ -35,27 +31,43 @@
                     allowfullscreen>
                 </iframe>
             </div>
-        </div>
-    </section>
+            <div class="info-text">
+                <h2>What is an Electronic Health Record (EHR)?</h2>
+                <p><strong>Definition:</strong> An Electronic Health Record (EHR) is a digital version of a patient's paper chart. It contains comprehensive information about a patient's medical history, treatment plans, allergies, lab results, radiology images, and other relevant health data. EHRs are designed to be shared across different healthcare settings, allowing for better coordination and continuity of care.</p>
+                
+                <h3>Key Features of EHRs:</h3>
+                <ul>
+                    <li><strong>Comprehensive Data Storage:</strong> EHRs store a wide range of patient information, including demographics, medical history, medications, immunizations, allergies, lab results, and radiology images.</li>
+                    <li><strong>Real-time Access:</strong> Healthcare providers can access EHRs anytime and anywhere, leading to timely and informed decision-making.</li>
+                    <li><strong>Interoperability:</strong> EHRs facilitate the sharing of health information among different healthcare providers, ensuring that all parties involved in a patient's care have access to the same information.</li>
+                    <li><strong>Clinical Decision Support:</strong> EHRs often include tools that provide reminders, alerts, and recommendations to assist healthcare providers in making better clinical decisions.</li>
+                    <li><strong>Patient Engagement:</strong> Many EHR systems offer patient portals, allowing patients to access their health records, schedule appointments, and communicate with their healthcare providers.</li>
+                    <li><strong>Data Analytics:</strong> EHRs enable healthcare organizations to analyze patient data for improving care delivery, identifying trends, and ensuring compliance with regulations.</li>
+                </ul>
 
-    <!-- Features Section -->
-    <section class="features">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h3>Easy to Use</h3>
-                    <p>Our platform is designed with simplicity and ease of use in mind, making it easy for you to manage patient records.</p>
-                </div>
-                <div class="col-md-4">
-                    <h3>Secure & Private</h3>
-                    <p>All your data is stored securely with privacy protections in place.</p>
-                </div>
-                <div class="col-md-4">
-                    <h3>24/7 Access</h3>
-                    <p>Access your records anytime, anywhere with our online system.</p>
-                </div>
+                <h3>Benefits of EHRs:</h3>
+                <ul>
+                    <li><strong>Improved Patient Care:</strong> EHRs reduce the likelihood of medical errors and enhance patient safety by providing comprehensive and up-to-date information.</li>
+                    <li><strong>Efficiency:</strong> EHRs streamline workflows, reduce paperwork, and minimize redundant testing, leading to more efficient healthcare delivery.</li>
+                    <li><strong>Cost Savings:</strong> By improving efficiency and reducing errors, EHRs can lead to significant cost savings for healthcare providers and patients.</li>
+                    <li><strong>Enhanced Collaboration:</strong> EHRs improve communication and collaboration among healthcare providers, ensuring coordinated care and better patient outcomes.</li>
+                    <li><strong>Better Data Management:</strong> EHRs make it easier to collect, store, and retrieve patient data, enhancing data security and privacy.</li>
+                </ul>
+
+                <h3>Challenges of EHR Implementation:</h3>
+                <ul>
+                    <li><strong>High Costs:</strong> Implementing an EHR system can be expensive, requiring significant upfront investment and ongoing maintenance costs.</li>
+                    <li><strong>Training Needs:</strong> Healthcare staff must be adequately trained to use EHR systems, which can take time and resources.</li>
+                    <li><strong>Data Interoperability:</strong> Ensuring that different EHR systems can communicate and share data effectively remains a challenge.</li>
+                    <li><strong>Privacy Concerns:</strong> Protecting patient data and ensuring compliance with regulations like HIPAA (Health Insurance Portability and Accountability Act) is critical.</li>
+                    <li><strong>Resistance to Change:</strong> Some healthcare providers may resist transitioning to EHR systems due to concerns about workflow disruptions and adapting to new technologies.</li>
+                </ul>
+
+                <h3>Future of EHRs:</h3>
+                <p>The future of EHRs is likely to focus on enhancing interoperability, improving user experience, and leveraging advanced technologies such as artificial intelligence (AI) and machine learning (ML) for predictive analytics. EHR systems are expected to evolve to better support personalized medicine, population health management, and value-based care.</p>
+                <p>As healthcare continues to digitize, EHRs will play a crucial role in improving patient outcomes, enhancing efficiency, and ensuring that healthcare providers have access to the most comprehensive and accurate patient data possible.</p>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 </body>
 </html>

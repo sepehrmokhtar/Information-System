@@ -1,111 +1,105 @@
-/* Global Styles */
-body {
-    background: #CCD0CF;
+/* General Reset */
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body */
+body {
     font-family: Arial, sans-serif;
+    background-color: #f1f9ff; /* Light blue for background */
+    color: #095d7e; /* Darker blue for text */
 }
 
-.container {
-    width: 90%; /* Adjusted to 90% for better mobile responsiveness */
-    max-width: 1200px; /* Optional: limit max width */
-    margin: auto;
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #14967f; /* Teal for sidebar */
     padding: 20px;
-}
-
-/* Navbar Styles */
-.navbar {
-    background: #06141b;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 15px 0;
+    position: fixed;
+    border-top-right-radius: 15px; /* Curved top-right corner */
+    border-top-left-radius: 15px; /* Curved top-left corner */
 }
 
 .navbar-brand {
-    font-size: 1.5em; /* Using em for scalability */
-    color: #CCD0CF;
+    color: #fff; /* White text for contrast */
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    display: block;
     text-decoration: none;
 }
 
 .navbar-nav {
     list-style: none;
     padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: wrap; /* Allow items to wrap on smaller screens */
 }
 
 .nav-item {
-    margin-left: 20px;
+    margin: 10px 0;
 }
 
 .nav-link {
+    color: #fff; /* White for links */
     text-decoration: none;
-    color: #777;
-    padding: 8px 15px;
-    transition: color 0.3s;
+    padding: 10px;
+    display: block;
+    transition: background-color 0.3s ease;
 }
 
 .nav-link:hover {
-    color: #aca8a4;
+    background-color: #e2fcd6; /* Light green for hover effect */
 }
 
-/* Hero Section */
+/* Main Content */
+.main-content {
+    margin-left: 270px; /* Adjusted for sidebar width */
+    padding: 20px;
+}
+
 .hero {
-    background: #f9f9f9;
-    padding: 60px 0;
+    background-color: #ccecee; /* Light teal for hero section */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.video-wrapper {
     text-align: center;
+    margin: 20px 0;
 }
 
-.hero h1 {
-    font-size: 2.25em; /* Using em for scalability */
-    color: #333;
+.info-text h2,
+.info-text h3 {
+    color: #14967f; /* Teal for headings */
 }
 
-/* Features Section */
-.features {
-    padding: 60px 0;
+.info-text p,
+.info-text ul {
+    margin: 10px 0;
 }
 
-.features .row {
-    display: flex;
-    justify-content: space-around;
-    text-align: center;
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+ul {
+    list-style-type: disc;
+    padding-left: 20px;
 }
 
-.features h3,
-.hero p {
-    color: #333;
-}
-
-.features p {
-    color: #666;
-}
-
-/* Responsive Styles */
+/* Responsive Design */
 @media (max-width: 768px) {
-    .container {
-        width: 95%; /* More width for smaller devices */
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-radius: 0; /* No curve for mobile view */
     }
 
-    .navbar-nav {
-        flex-direction: column; /* Stack items vertically */
-        align-items: center; /* Center items */
+    .main-content {
+        margin-left: 0;
     }
 
-    .nav-item {
-        margin: 10px 0; /* Adjust spacing for stacked items */
-    }
-
-    .hero h1 {
-        font-size: 1.75em; /* Adjust heading size for mobile */
-    }
-
-    .features .row {
-        flex-direction: column; /* Stack features vertically */
-    }
-
-    .features h3 {
-        margin: 20px 0 10px; /* Add spacing between titles and paragraphs */
+    .video-wrapper iframe {
+        width: 100%;
+        height: auto;
     }
 }
