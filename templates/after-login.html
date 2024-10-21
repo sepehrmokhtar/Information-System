@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Data</title>
+    <link rel="stylesheet" href="../static/style-css-method.css"> <!-- Ensure this path is correct -->
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f9ff; /* Light blue for background */
+            color: #095d7e; /* Darker blue for text */
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #14967f; /* Teal for sidebar */
+            padding: 20px;
+            position: fixed;
+            border-top-right-radius: 15px; /* Curved top-right corner */
+            border-top-left-radius: 15px; /* Curved top-left corner */
+        }
+
+        .navbar-brand {
+            color: #fff; /* White text for contrast */
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: block;
+            text-decoration: none;
+        }
+
+        .navbar-nav {
+            list-style: none;
+            padding: 0;
+        }
+
+        .nav-item {
+            margin: 10px 0;
+        }
+
+        .nav-link {
+            color: #fff; /* White for links */
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for background color and scaling */
+        }
+
+        .nav-link:hover {
+            background-color: #095d7e; /* Light green for hover effect */
+            transform: scale(1.1); /* Grow the text size on hover */
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 270px; /* Adjusted for sidebar width */
+            padding: 20px;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            margin-bottom: 20px;
+        }
+
+        .search-bar input[type="text"] {
+            width: 30%; /* Set search bar width */
+            padding: 8px; /* Padding for search bar */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        .search-bar button {
+            padding: 8px 15px; /* Padding for search button */
+            margin-left: 10px; /* Space between input and button */
+            background-color: #14967f; /* Teal background */
+            color: #fff; /* White text */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        .search-bar button:hover {
+            background-color: #0e7b5e; /* Darker teal on hover */
+        }
+
+        /* Patient Table */
+        .patient-table {
+            width: 100%; /* Full width of the page */
+            border-collapse: collapse; /* Remove space between cells */
+            margin-top: 20px; /* Space above the table */
+        }
+
+        .patient-table th,
+        .patient-table td {
+            border: 1px solid #ccc; /* Light gray border */
+            padding: 10px; /* Padding for table cells */
+            text-align: left; /* Align text to the left */
+        }
+
+        .patient-table th {
+            background-color: #14967f; /* Teal background for header */
+            color: #fff; /* White text */
+        }
+
+        .patient-table tr:nth-child(even) {
+            background-color: #e7f5f2; /* Light teal for even rows */
+        }
+
+        /* Action Button */
+        .action-button {
+            background-color: #3498db; /* Blue background */
+            color: white; /* White text */
+            padding: 5px 10px; /* Padding for button */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor */
+        }
+
+        .action-button:hover {
+            background-color: #2980b9; /* Darker blue on hover */
+        }
+
+        /* Add Patient Button */
+        .add-patient-button {
+            background-color: #2ecc71; /* Green background */
+            color: white; /* White text */
+            padding: 10px 15px; /* Padding for button */
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor */
+            margin-bottom: 20px; /* Space below button */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
+
+        .add-patient-button:hover {
+            background-color: #27ae60; /* Darker green on hover */
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-radius: 0; /* No curve for mobile view */
+            }
+
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <a href="#" class="navbar-brand">EHR System</a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a href="index.html" class="nav-link">Home</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Doctors</a>
+            </li>
+            <li class="nav-item">
+                <a href="patient_data.html" class="nav-link">Patients</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">Settings</a>
+            </li>
+        </ul>
+    </div>
+    <div class="main-content">
+        <h1>Patient Data</h1>
+        <button class="add-patient-button" onclick="location.href='/add-patient'">Add Patient</button>
+        
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Search by name...">
+            <button id="searchButton">Search</button>
+        </div>
+        
+        <table class="patient-table">
+            <thead>
+                <tr>
+                    <th>Patient ID</th>
+                    <th>Name</th>
+                    <th>Condition</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for patient in patients %}
+                <tr>
+                    <td>{{ patient.patient_id }}</td>
+                    <td>{{ patient.full_name }}</td>
+                    <td>{{ patient.condition }}</td>
+                    <td>
+                        <button class="action-button" onclick="location.href='/patient/{{ patient.patient_id }}'">View</button>
+                        <button class="action-button" onclick="location.href='/patient/edit/{{ patient.patient_id }}'">Edit</button>
+                        <button class="action-button" onclick="location.href='/patient/delete/{{ patient.patient_id }}'">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
