@@ -85,6 +85,30 @@ ul {
     padding-left: 20px;
 }
 
+/* Input Styles */
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"] {
+    width: 20%; /* Set to 20% width */
+    padding: 6px; /* Reduced padding */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin-bottom: 10px; /* Space between input fields */
+    font-size: 0.8em; /* Slightly smaller font size */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="password"]:focus {
+    border-color: #14967f; /* Change border color on focus */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on focus */
+    outline: none; /* Remove default outline */
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .sidebar {
@@ -102,4 +126,22 @@ ul {
         width: 100%;
         height: auto;
     }
+}
+
+/* Button Styles */
+button {
+    background-color: #14967f; /* Teal background */
+    color: #fff; /* White text */
+    padding: 10px 20px; /* Padding for the button */
+    border: none; /* Remove default border */
+    border-radius: 5px; /* Rounded corners */
+    font-size: 1em; /* Font size */
+    cursor: pointer; /* Pointer cursor on hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+}
+
+button:hover {
+    background-color: #0e7b5e; /* Darker teal on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
 }
