@@ -45,11 +45,12 @@ body {
     text-decoration: none;
     padding: 10px;
     display: block;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for background color and scaling */
 }
 
 .nav-link:hover {
-    background-color: #e2fcd6; /* Light green for hover effect */
+    background-color: #095d7e; /* Light green for hover effect */
+    transform: scale(1.1); /* Grow the text size on hover */
 }
 
 /* Main Content */
