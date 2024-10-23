@@ -5,7 +5,7 @@ from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash # Used to hash passwords stored in database.
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://<user>:<password>@localhost:3306/ehr' # install the pymysql. Created MySQL database runs on localhost port 3306
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://<username>:<password>@localhost:3306/ehr' # install the pymysql. Created MySQL database runs on localhost port 3306
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "12345678910" # In order to safely store session cookies.
 app.permanent_session_lifetime = timedelta(days=1)
@@ -72,7 +72,7 @@ def register():
 def login():
     if 'email' in session:
         flash('Already logged in!')
-        return redirect(url_for('dashboard'))
+        return redirect(url_for('dashboard', last_name=session.get('last_name')))
 
     if request.method == "POST":
         email = request.form['email']
@@ -83,20 +83,20 @@ def login():
             session['email'] = email
             session['last_name'] = found_doctor.last_name
             flash("Login successful!")
-            return redirect(url_for("dashboard"))
+            return redirect(url_for("dashboard", last_name=session.get('last_name')))
         else:
             flash("Login failed. Please check your credentials or make sure you are registered.")
 
     return render_template("login-page.html")
 
 
-@app.route('/dashboard')
-def dashboard():
+@app.route('/dashboard/<last_name>')
+def dashboard(last_name):
     if 'email' not in session:
         flash("In order to access the dashboard you need to login.")
         return redirect(url_for('login'))
     else:
-        return f"Welcome to your dashboard, {session.get('last_name')}."
+        return f"Welcome to your dashboard, {last_name}."
 
     return render_template("after-login.html")
 
