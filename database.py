@@ -3,12 +3,24 @@ import mysql.connector
 # Establish a connection to the MySQL database
 connection = mysql.connector.connect(
     host='localhost',       # MySQL host
-    user='Sina',   # MySQL username
-    password='1111',  # MySQL password
-    database='ehr'  # database you want to use
+    user='',   # MySQL username
+    password='',  # MySQL password
 )
 
 # Create a cursor object
+cursor = connection.cursor()
+
+cursor.execute("CREATE DATABASE IF NOT EXISTS ehr")
+connection.commit()
+
+connection = mysql.connector.connect(
+    host='localhost',       # MySQL host
+    user='',            # MySQL username
+    password='',            # MySQL password
+    database='ehr'          # Connect to the 'ehr' database
+)
+
+# Create a new cursor object to execute further SQL commands
 cursor = connection.cursor()
 
 # Write SQL queries to create the tables
