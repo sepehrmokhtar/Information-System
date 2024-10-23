@@ -32,6 +32,41 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
         }
+        .sidebar {
+            width: 200px;
+            position: fixed;
+            height: 100%;
+            background-color: #333;
+            padding-top: 20px;
+            color: white;
+        }
+        .sidebar a.navbar-brand {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: block;
+            text-align: center;
+            color: #fff;
+        }
+        .navbar-nav {
+            list-style-type: none;
+            padding: 0;
+        }
+        .navbar-nav .nav-item {
+            padding: 10px 0;
+        }
+        .navbar-nav .nav-link {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 10px 20px;
+        }
+        .navbar-nav .nav-link:hover {
+            background-color: #555;
+        }
+        .main-content {
+            margin-left: 220px;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
@@ -42,7 +77,7 @@
                 <a href="../" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link">Doctors</a>
+                <a href="/register-doctor" class="nav-link">Doctors</a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">Patients</a>
@@ -55,30 +90,24 @@
     <div class="main-content">
         <div class="content-wrapper">
             <h1>Doctor Registration</h1>
-            <form action="#" method="post">
-                <label for="firstName">First Name:</label><br>
-                <input type="text" id="firstName" name="firstName" autocomplete="given-name" required><br><br>
+            <form action="{{ url_for('register') }}" method="post">
+                <label for="fullName">Full Name:</label><br>
+                <input type="text" id="fullName" name="nm" autocomplete="name" required><br><br>
                 
-                <label for="lastName">Last Name:</label><br>
-                <input type="text" id="lastName" name="lastName" autocomplete="family-name" required><br><br>
+                <label for="specialization">Specialization:</label><br>
+                <input type="text" id="specialization" name="spcz" required><br><br>
                 
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username" autocomplete="username" required><br><br>
+                <label for="company">Company:</label><br>
+                <input type="text" id="company" name="cmp"><br><br>
+                
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="eml" autocomplete="email" required><br><br>
                 
                 <label for="password">Password:</label><br>
-                <input type="password" id="password" name="password" autocomplete="new-password" required><br>
+                <input type="password" id="password" name="psw" required><br>
                 
                 <div id="passwordMessage"></div><br>
                 <input type="checkbox" id="showPassword"> <label for="showPassword">Show Password</label><br><br>
-                
-                <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email" autocomplete="email" required><br><br>
-                
-                <label for="specialization">Specialization:</label><br>
-                <input type="text" id="specialization" name="specialization" required><br><br>
-                
-                <label for="phone">Phone Number:</label><br>
-                <input type="tel" id="phone" name="phone" autocomplete="tel" required><br><br>
                 
                 <button type="submit">Register</button>
             </form>
