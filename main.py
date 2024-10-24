@@ -2,11 +2,13 @@
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
+from werkzeug.security import generate_password_hash, check_password_hash # Used to hash passwords stored in database.
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://Sina:1111@localhost:3306/ehr' # install the pymysql. Created MySQL database runs on locahost port 3306
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://<username>:<password>@localhost:3306/ehr' # install the pymysql. Created MySQL database runs on localhost port 3306
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = "12345678910"
+app.secret_key = "12345678910" # In order to safely store session cookies.
+app.permanent_session_lifetime = timedelta(days=1)
 
 db = SQLAlchemy(app)
 
@@ -15,16 +17,16 @@ class Doctor(db.Model):
     __tablename__ = 'doctors'
 
     doctor_id = db.Column('doctor_id', db.Integer, primary_key=True) # Points to doctor_id in MySQL db
-    full_name = db.Column('full_name', db.String(100), nullable=False)
+    first_name = db.Column('first_name', db.String(100), nullable=False)
+    last_name = db.Column('last_name', db.String(100), nullable=False)
     specialization = db.Column('specialization', db.String(100))
-    company = db.Column('company', db.String(100))
     email = db.Column('email', db.String(100), nullable=False, unique=True)
     password = db.Column('password', db.String(15), nullable=False)
 
-    def __init__(self, full_name, specialization, company, email, password):
-        self.full_name = full_name
+    def __init__(self, first_name, last_name, specialization, email, password):
+        self.first_name = first_name
+        self.last_name = last_name
         self.specialization = specialization
-        self.company = company
         self.email = email
         self.password = password
 
@@ -48,21 +50,55 @@ def home():
 @app.route('/register-doctor', methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        full_name = request.form['nm']
-        specialization = request.form['spcz']
-        company = request.form['cmp']
-        email = request.form['eml']
-        password = request.form['psw']
+        first_name = request.form['firstName']
+        last_name = request.form['lastName']
+        specialization = request.form['specialization']
+        email = request.form['email']
+        password = request.form['password']
+        hashed_password = generate_password_hash(password, method='sha256')
         if Doctor.query.filter_by(email=email).first():
             flash("Doctor already registered")
             return redirect(url_for("home"))
         else:
-            doctor = Doctor(full_name, specialization, company, email, password)
+            doctor = Doctor(first_name, last_name, specialization, email, hashed_password)
             db.session.add(doctor)
             db.session.commit()
-            flash("Doctor was successfully registered.")
-            return redirect(url_for("home"))
+            flash("Doctor was successfully registered, please login.")
+            return redirect(url_for("login"))
     return render_template("Doctor-Registration.html")
+
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if 'email' in session:
+        flash('Already logged in!')
+        return redirect(url_for('dashboard', last_name=session.get('last_name')))
+
+    if request.method == "POST":
+        email = request.form['email']
+        password = request.form['password']
+        found_doctor = Doctor.query.filter_by(email=email).first()
+        if found_doctor and check_password_hash(found_doctor.password, password):
+            session.permanent = True
+            session['email'] = email
+            session['last_name'] = found_doctor.last_name
+            flash("Login successful!")
+            return redirect(url_for("dashboard", last_name=session.get('last_name')))
+        else:
+            flash("Login failed. Please check your credentials or make sure you are registered.")
+
+    return render_template("login-page.html")
+
+
+@app.route('/dashboard/<last_name>')
+def dashboard(last_name):
+    if 'email' not in session:
+        flash("In order to access the dashboard you need to login.")
+        return redirect(url_for('login'))
+    else:
+        return f"Welcome to your dashboard, {last_name}."
+
+    return render_template("after-login.html")
 
 
 @app.route('/about-us')
@@ -74,16 +110,12 @@ def about():
 def info():
     return render_template('info.html')
 
-
 '''
-@app.route('/login', methods=["GET", "POST"]) # Sessions to be done here.
-def login():
-    #TODO
-
 @app.route('/view')
 def view():
      #TODO: Will view the patient database
 '''
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()  # Ensure this is inside the app context, and before everything the tables are created.
