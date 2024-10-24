@@ -6,66 +6,74 @@
     <title>Doctor Registration</title>
     <link rel="stylesheet" href="../static/style-css-method.css">
     <style>
-        #passwordMessage {
-            color: red;
+        #passwordMessage ul {
+            list-style-type: none;
+            padding: 0;
             font-size: 0.9em;
         }
-        button {
-            background-color: #14967f;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1em;
-            cursor: pointer;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        #passwordMessage li {
+            color: red;
         }
-        button:hover {
-            background-color: #0e7b5e;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        #passwordMessage .valid {
+            color: #14967f; /* Teal for valid messages */
         }
+        /* Styles will inherit from your existing CSS */
         .content-wrapper {
-            background-color: #ccecee;
+            background-color: #ccecee; /* Light teal background */
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
         }
-        .sidebar {
-            width: 200px;
-            position: fixed;
-            height: 100%;
-            background-color: #333;
-            padding-top: 20px;
-            color: white;
+        .main-content {
+            margin-left: 270px; /* Adjusted for sidebar width */
+            padding: 20px;
         }
-        .sidebar a.navbar-brand {
+
+        /* Updated sidebar styles with background image */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-image: url('medical background.jpeg'); /* Background image */
+            background-size: cover; /* Cover the entire sidebar */
+            background-position: center; /* Center the image */
+            padding: 20px;
+            position: fixed;
+            border-top-right-radius: 15px; /* Curved top-right corner */
+            border-top-left-radius: 15px; /* Curved top-left corner */
+            color: white; /* Default text color for better visibility */
+        }
+        .navbar-brand {
+            color: #095d7e; /* Darker blue for brand text */
             font-size: 1.5em;
             margin-bottom: 20px;
             display: block;
-            text-align: center;
-            color: #fff;
+            text-decoration: none;
         }
         .navbar-nav {
-            list-style-type: none;
+            list-style: none;
             padding: 0;
         }
-        .navbar-nav .nav-item {
-            padding: 10px 0;
+        .nav-item {
+            margin: 10px 0;
         }
-        .navbar-nav .nav-link {
-            color: #fff;
+        .nav-link {
+            color: #095d7e; /* Set all nav link colors to the same as the brand */
             text-decoration: none;
+            padding: 10px;
             display: block;
-            padding: 10px 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for background color and scaling */
         }
-        .navbar-nav .nav-link:hover {
-            background-color: #555;
+        .nav-link:hover {
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background on hover */
+            transform: scale(1.1); /* Grow the text size on hover */
+            border-radius: 8px; /* Add rounded corners on hover */
         }
-        .main-content {
-            margin-left: 220px;
-            padding: 20px;
+
+        /* Sidebar contact styles */
+        .sidebar-contact {
+            margin-top: 20px; /* Space between nav items and contact section */
+            color: #095d7e; /* Text color for contact section */
         }
     </style>
 </head>
@@ -86,6 +94,13 @@
                 <a href="#" class="nav-link">Settings</a>
             </li>
         </ul>
+
+        <!-- Contact section moved to the end of the navigation bar -->
+        <div class="sidebar-contact">
+            <h3>Contact</h3>
+            <p>Email: <a href="mailto:info@SYSP.de" style="color: #095d7e; text-decoration: none;">info@SYSP.de</a></p>
+            <p>TEL: +49 666 666 2025</p>
+        </div>
     </div>
     <div class="main-content">
         <div class="content-wrapper">
@@ -106,33 +121,20 @@
                 <label for="password">Password:</label><br>
                 <input type="password" id="password" name="psw" required><br>
                 
-                <div id="passwordMessage"></div><br>
+                <div id="passwordMessage">
+                    <ul>
+                        <li id="length">Be at least 8 characters long</li>
+                        <li id="number">Include Numbers</li>
+                        <li id="lowercase">Include at least one Lowercase letter</li>
+                        <li id="uppercase">Include at least one Uppercase letter</li>
+                        <li id="special">Include Symbols</li>
+                    </ul>
+                </div><br>
                 <input type="checkbox" id="showPassword"> <label for="showPassword">Show Password</label><br><br>
                 
                 <button type="submit">Register</button>
             </form>
         </div>
     </div>
-
-    <script>
-        const passwordInput = document.getElementById('password');
-        const passwordMessage = document.getElementById('passwordMessage');
-        const showPasswordCheckbox = document.getElementById('showPassword');
-
-        passwordInput.addEventListener('input', () => {
-            const password = passwordInput.value;
-            const strongPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-            if (!strongPassword.test(password)) {
-                passwordMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.';
-            } else {
-                passwordMessage.textContent = '';
-            }
-        });
-
-        showPasswordCheckbox.addEventListener('change', () => {
-            passwordInput.type = showPasswordCheckbox.checked ? 'text' : 'password';
-        });
-    </script>
 </body>
 </html>
