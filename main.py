@@ -57,14 +57,19 @@ def register():
         password = request.form['password']
         hashed_password = generate_password_hash(password, method='sha256')
         if Doctor.query.filter_by(email=email).first():
-            flash("Doctor already registered")
+            flash("Doctor is already registered.")
             return redirect(url_for("home"))
         else:
             doctor = Doctor(first_name, last_name, specialization, email, hashed_password)
-            db.session.add(doctor)
-            db.session.commit()
-            flash("Doctor was successfully registered, please login.")
-            return redirect(url_for("login"))
+            try:
+                db.session.add(doctor)
+                db.session.commit()
+                flash("Doctor was successfully registered. Please login.")
+                return redirect(url_for("home"))
+            except Exception:
+                db.session.rollback()
+                flash("An error occurred while registering. Please try again.")
+                return redirect(url_for("home"))
     return render_template("Doctor-Registration.html")
 
 
@@ -101,6 +106,21 @@ def dashboard(last_name):
     return render_template("after-login.html")
 
 
+@app.route('/forget-password',  methods=["GET", "POST"])
+def forget_password():
+    if request.method == 'POST':
+        email = request.form['email']
+        new_password = request.form['new_password']
+        found_doctor = Doctor.query.filter_by(email=email).first()
+        if found_doctor:
+            new_hashed_password = generate_password_hash(new_password, method='sha256')
+            found_doctor.password = new_hashed_password
+            db.session.commit()
+            flash("New password was successfully saved. Please login again.")
+            return redirect(url_for('login'))
+    return render_template("forget-password.html")
+
+
 @app.route('/about-us')
 def about():
     return render_template('about-us.html')
@@ -109,6 +129,7 @@ def about():
 @app.route('/info')
 def info():
     return render_template('info.html')
+
 
 '''
 @app.route('/view')
