@@ -5,7 +5,7 @@ from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash # Used to hash passwords stored in database.
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://<username>:<password>@localhost:3306/ehr' # install the pymysql. Created MySQL database runs on localhost port 3306
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://sql7741129:XUQ35MWg9D@sql7.freesqldatabase.com/sql7741129' # install the pymysql. Created MySQL database runs on localhost port 3306
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "12345678910" # In order to safely store session cookies.
 app.permanent_session_lifetime = timedelta(days=1)
