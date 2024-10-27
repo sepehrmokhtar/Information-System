@@ -2,25 +2,13 @@ import mysql.connector
 
 # Establish a connection to the MySQL database
 connection = mysql.connector.connect(
-    host='localhost',       # MySQL host
-    user='',   # MySQL username
-    password='',  # MySQL password
+    host='sql7.freesqldatabase.com',       # MySQL host
+    user='sql7741129',   # MySQL username
+    password='XUQ35MWg9D',  # MySQL password
+    database='sql7741129'   # Connect to the database
 )
 
 # Create a cursor object
-cursor = connection.cursor()
-
-cursor.execute("CREATE DATABASE IF NOT EXISTS ehr")
-connection.commit()
-
-connection = mysql.connector.connect(
-    host='localhost',       # MySQL host
-    user='',            # MySQL username
-    password='',            # MySQL password
-    database='ehr'          # Connect to the 'ehr' database
-)
-
-# Create a new cursor object to execute further SQL commands
 cursor = connection.cursor()
 
 # Write SQL queries to create the tables
@@ -44,11 +32,11 @@ CREATE TABLE PATIENTS (
 );
 """
 
-# Execute the queries
+# Execute queries
 cursor.execute(Doctor)
 cursor.execute(Patient)
 connection.commit()
-# Close the cursor and the connection
+# Closing cursor and the connection
 cursor.close()
 connection.close()
 
