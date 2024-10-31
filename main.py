@@ -36,10 +36,16 @@ class Patient(db.Model):
     __tablename__ = 'patients'
 
     patient_id = db.Column('patient_id', db.Integer, primary_key=True)
-    full_name = db.Column('full_name', db.String(100))
+    first_name = db.Column('first_name', db.String(100), nullable=False)
+    last_name = db.Column('last_name', db.String(100), nullable=False)
+    email = db.Column('email', db.String(100), nullable=False, unique=True)
+    address = db.Column('address', db.String(100), nullable=False)
 
-    def __init__(self, full_name):
-        self.full_name = full_name
+    def __init__(self, first_name, last_name, email, address):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.address = address
 
 
 @app.route('/')
