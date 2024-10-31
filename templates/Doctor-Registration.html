@@ -6,74 +6,31 @@
     <title>Doctor Registration</title>
     <link rel="stylesheet" href="../static/style-css-method.css">
     <style>
-        #passwordMessage ul {
-            list-style-type: none;
-            padding: 0;
+        #passwordMessage {
+            color: red;
             font-size: 0.9em;
         }
-        #passwordMessage li {
-            color: red;
+        button {
+            background-color: #14967f;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
-        #passwordMessage .valid {
-            color: #14967f; /* Teal for valid messages */
+        button:hover {
+            background-color: #0e7b5e;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
-        /* Styles will inherit from your existing CSS */
         .content-wrapper {
-            background-color: #ccecee; /* Light teal background */
+            background-color: #ccecee;
             border-radius: 8px;
             padding: 20px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
-        }
-        .main-content {
-            margin-left: 270px; /* Adjusted for sidebar width */
-            padding: 20px;
-        }
-
-        /* Updated sidebar styles with background image */
-        .sidebar {
-            width: 250px;
-            height: 100vh;
-            background-image: url('medical background.jpeg'); /* Background image */
-            background-size: cover; /* Cover the entire sidebar */
-            background-position: center; /* Center the image */
-            padding: 20px;
-            position: fixed;
-            border-top-right-radius: 15px; /* Curved top-right corner */
-            border-top-left-radius: 15px; /* Curved top-left corner */
-            color: white; /* Default text color for better visibility */
-        }
-        .navbar-brand {
-            color: #095d7e; /* Darker blue for brand text */
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            display: block;
-            text-decoration: none;
-        }
-        .navbar-nav {
-            list-style: none;
-            padding: 0;
-        }
-        .nav-item {
-            margin: 10px 0;
-        }
-        .nav-link {
-            color: #095d7e; /* Set all nav link colors to the same as the brand */
-            text-decoration: none;
-            padding: 10px;
-            display: block;
-            transition: background-color 0.3s ease, transform 0.3s ease; /* Smooth transition for background color and scaling */
-        }
-        .nav-link:hover {
-            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background on hover */
-            transform: scale(1.1); /* Grow the text size on hover */
-            border-radius: 8px; /* Add rounded corners on hover */
-        }
-
-        /* Sidebar contact styles */
-        .sidebar-contact {
-            margin-top: 20px; /* Space between nav items and contact section */
-            color: #095d7e; /* Text color for contact section */
         }
     </style>
 </head>
@@ -85,7 +42,7 @@
                 <a href="../" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-                <a href="../register-doctor" class="nav-link">Doctors</a>
+                <a href="#" class="nav-link">Doctors</a>
             </li>
             <li class="nav-item">
                 <a href="#" class="nav-link">Patients</a>
@@ -94,47 +51,53 @@
                 <a href="#" class="nav-link">Settings</a>
             </li>
         </ul>
-
-        <!-- Contact section moved to the end of the navigation bar -->
-        <div class="sidebar-contact">
-            <h3>Contact</h3>
-            <p>Email: <a href="mailto:info@SYSP.de" style="color: #095d7e; text-decoration: none;">info@SYSP.de</a></p>
-            <p>TEL: +49 666 666 2025</p>
-        </div>
     </div>
     <div class="main-content">
         <div class="content-wrapper">
             <h1>Doctor Registration</h1>
-            <form action="{{ url_for('register') }}" method="post">
-                <label for="fullName">Full Name:</label><br>
-                <input type="text" id="fullName" name="nm" autocomplete="name" required><br><br>
-                
+            <form action="#" method="post">
+                <label for="firstName">First Name:</label><br>
+                <input type="text" id="firstName" name="firstName" autocomplete="given-name" required><br><br>
+
+                <label for="lastName">Last Name:</label><br>
+                <input type="text" id="lastName" name="lastName" autocomplete="family-name" required><br><br>
+
                 <label for="specialization">Specialization:</label><br>
-                <input type="text" id="specialization" name="spcz" required><br><br>
-                
-                <label for="company">Company:</label><br>
-                <input type="text" id="company" name="cmp"><br><br>
-                
+                <input type="text" id="specialization" name="specialization" required><br><br>
+
                 <label for="email">Email:</label><br>
-                <input type="email" id="email" name="eml" autocomplete="email" required><br><br>
-                
+                <input type="email" id="email" name="email" autocomplete="email" required><br><br>
+
                 <label for="password">Password:</label><br>
-                <input type="password" id="password" name="psw" required><br>
-                
-                <div id="passwordMessage">
-                    <ul>
-                        <li id="length">Be at least 8 characters long</li>
-                        <li id="number">Include Numbers</li>
-                        <li id="lowercase">Include at least one Lowercase letter</li>
-                        <li id="uppercase">Include at least one Uppercase letter</li>
-                        <li id="special">Include Symbols</li>
-                    </ul>
-                </div><br>
+                <input type="password" id="password" name="password" autocomplete="new-password" required><br>
+
+                <div id="passwordMessage"></div><br>
                 <input type="checkbox" id="showPassword"> <label for="showPassword">Show Password</label><br><br>
-                
+
                 <button type="submit">Register</button>
             </form>
         </div>
     </div>
+
+    <script>
+        const passwordInput = document.getElementById('password');
+        const passwordMessage = document.getElementById('passwordMessage');
+        const showPasswordCheckbox = document.getElementById('showPassword');
+
+        passwordInput.addEventListener('input', () => {
+            const password = passwordInput.value;
+            const strongPassword = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+            if (!strongPassword.test(password)) {
+                passwordMessage.textContent = 'Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.';
+            } else {
+                passwordMessage.textContent = '';
+            }
+        });
+
+        showPasswordCheckbox.addEventListener('change', () => {
+            passwordInput.type = showPasswordCheckbox.checked ? 'text' : 'password';
+        });
+    </script>
 </body>
 </html>

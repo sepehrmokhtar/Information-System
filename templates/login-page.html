@@ -117,45 +117,6 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
         }
 
-        /* Forgot Password Modal */
-        .modal {
-            display: none; /* Hidden by default */
-            position: fixed; /* Stay in place */
-            z-index: 1; /* Sit on top */
-            left: 0;
-            top: 0;
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            overflow: auto; /* Enable scroll if needed */
-            background-color: rgb(0, 0, 0); /* Fallback color */
-            background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
-            padding-top: 60px; /* Position the modal */
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 5% auto; /* 15% from the top and centered */
-            padding: 20px;
-            border: 1px solid #888;
-            width: 300px; /* Could be more or less, depending on screen size */
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        
         /* Responsive Design */
         @media (max-width: 768px) {
             .sidebar {
@@ -193,32 +154,19 @@
         <div class="content-wrapper">
             <h1>User Login</h1>
             <form action="#" method="post">
-                <label for="username">Username:</label><br>
-                <input type="text" id="username" name="username" autocomplete="username" required><br><br>
-                
+                <label for="email">Email:</label><br>
+                <input type="email" id="email" name="email" autocomplete="email" required><br><br>
+
                 <label for="password">Password:</label><br>
                 <input type="password" id="password" name="password" autocomplete="current-password" required><br>
-                
+
                 <div id="loginMessage"></div><br>
                 <input type="checkbox" id="showPassword"> <label for="showPassword">Show Password</label><br><br>
-                
+
                 <button type="submit">Login</button>
             </form>
             <br>
-            <a href="#" id="forgotPasswordLink">Forgot Password?</a>
-        </div>
-    </div>
-
-    <!-- Forgot Password Modal -->
-    <div id="forgotPasswordModal" class="modal">
-        <div class="modal-content">
-            <span class="close" id="closeModal">&times;</span>
-            <h2>Forgot Password</h2>
-            <p>Please enter your email address:</p>
-            <form id="forgotPasswordForm" action="#" method="post">
-                <input type="email" id="email" name="email" placeholder="Your Email" required><br><br>
-                <button type="submit">Reset Password</button>
-            </form>
+            <a href="../forget-password" id="forgotPasswordLink">Forgot Password?</a>
         </div>
     </div>
 
@@ -226,8 +174,10 @@
         const passwordInput = document.getElementById('password');
         const loginMessage = document.getElementById('loginMessage');
         const showPasswordCheckbox = document.getElementById('showPassword');
-        const forgotPasswordLink = document.getElementById('forgotPasswordLink');
-        const modal = document.getElementById('forgotPasswordModal');
-        const closeModal = document.getElementById('closeModal');
 
-        showPasswordCheckbox.addEventListener('change
+        showPasswordCheckbox.addEventListener('change', function() {
+            passwordInput.type = this.checked ? 'text' : 'password'; // Toggle password visibility
+        });
+    </script>
+</body>
+</html>
