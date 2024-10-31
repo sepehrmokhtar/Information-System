@@ -13,11 +13,11 @@ cursor = connection.cursor()
 
 # Write SQL queries to create the tables
 Doctor = """
-CREATE TABLE DOCTORS (
+CREATE TABLE doctors (
     doctor_id INT NOT NULL AUTO_INCREMENT,
-    full_name VARCHAR(100),
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
     specialization VARCHAR(100),
-    company VARCHAR(100),
     email VARCHAR(100),
     password VARCHAR(15),
     PRIMARY KEY (doctor_id)
@@ -25,18 +25,21 @@ CREATE TABLE DOCTORS (
 """
 
 Patient = """
-CREATE TABLE PATIENTS (
+CREATE TABLE patients (
     patient_id INT NOT NULL AUTO_INCREMENT,
-    full_name VARCHAR(100),
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    email VARCHAR(100),
+    address VARCHAR(100)
     PRIMARY KEY (patient_id)
 );
 """
 
-# Execute queries
+# Execute the queries
 cursor.execute(Doctor)
 cursor.execute(Patient)
 connection.commit()
-# Closing cursor and the connection
+# Close the cursor and the connection
 cursor.close()
 connection.close()
 
