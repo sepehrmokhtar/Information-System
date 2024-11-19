@@ -61,7 +61,7 @@ def register():
         specialization = request.form['specialization']
         email = request.form['email']
         password = request.form['password']
-        hashed_password = generate_password_hash(password, method='sha256')
+        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
         if Doctor.query.filter_by(email=email).first():
             flash("Doctor is already registered.")
             return redirect(url_for("home"))
@@ -81,7 +81,7 @@ def register():
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
-    if 'email' in session:
+    if session.get('email'):
         flash('Already logged in!')
         return redirect(url_for('dashboard', last_name=session.get('last_name')))
 
@@ -101,9 +101,16 @@ def login():
     return render_template("login-page.html")
 
 
+@app.route("/logout")
+def logout():
+    session.clear()
+    flash("You have been logged out!", 'info')
+    return redirect(url_for("home"))
+
+
 @app.route('/dashboard/<last_name>')
 def dashboard(last_name):
-    if 'email' not in session:
+    if not session.get('email'):
         flash("In order to access the dashboard you need to login.")
         return redirect(url_for('login'))
     else:
