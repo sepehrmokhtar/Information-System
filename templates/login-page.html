@@ -133,6 +133,13 @@
     </style>
 </head>
 <body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
     <div class="sidebar">
         <a href="#" class="navbar-brand">EHR System</a>
         <ul class="navbar-nav">
@@ -153,7 +160,7 @@
     <div class="main-content">
         <div class="content-wrapper">
             <h1>User Login</h1>
-            <form action="../dashboard" method="post">
+            <form action="{{ url_for('login') }}" method="post">
                 <label for="email">Email:</label><br>
                 <input type="email" id="email" name="email" autocomplete="email" required><br><br>
 

@@ -11,7 +11,7 @@ connection = mysql.connector.connect(
 # Create a cursor object
 cursor = connection.cursor()
 
-# Write SQL queries to create the tables
+# Write SQL queries to create the tables. TODO: largen the password capacity to be avle to store large hashed passwords.
 Doctor = """
 CREATE TABLE doctors (
     doctor_id INT NOT NULL AUTO_INCREMENT,

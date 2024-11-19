@@ -21,7 +21,7 @@ class Doctor(db.Model):
     last_name = db.Column('last_name', db.String(100), nullable=False)
     specialization = db.Column('specialization', db.String(100))
     email = db.Column('email', db.String(100), nullable=False, unique=True)
-    password = db.Column('password', db.String(15), nullable=False)
+    password = db.Column('password', db.String(200), nullable=False)
 
     def __init__(self, first_name, last_name, specialization, email, password):
         self.first_name = first_name
@@ -59,9 +59,9 @@ def register():
         first_name = request.form['firstName']
         last_name = request.form['lastName']
         specialization = request.form['specialization']
-        email = request.form['email']
+        email = request.form['email'].strip().lower()  # Normalize email
         password = request.form['password']
-        hashed_password = generate_password_hash(password, method='pbkdf2:sha256')
+        hashed_password = generate_password_hash(password)  # Default is PBKDF2-SHA256
         if Doctor.query.filter_by(email=email).first():
             flash("Doctor is already registered.")
             return redirect(url_for("home"))
@@ -86,7 +86,7 @@ def login():
         return redirect(url_for('dashboard', last_name=session.get('last_name')))
 
     if request.method == "POST":
-        email = request.form['email']
+        email = request.form['email'].strip().lower()  # Normalize the input email
         password = request.form['password']
         found_doctor = Doctor.query.filter_by(email=email).first()
         if found_doctor and check_password_hash(found_doctor.password, password):
@@ -94,7 +94,7 @@ def login():
             session['email'] = email
             session['last_name'] = found_doctor.last_name
             flash("Login successful!")
-            return redirect(url_for("dashboard", last_name=session.get('last_name')))
+            return redirect(url_for("dashboard", last_name=found_doctor.last_name))
         else:
             flash("Login failed. Please check your credentials or make sure you are registered.")
 
@@ -104,7 +104,7 @@ def login():
 @app.route("/logout")
 def logout():
     session.clear()
-    flash("You have been logged out!", 'info')
+    flash("You have been logged out!")
     return redirect(url_for("home"))
 
 
@@ -113,10 +113,8 @@ def dashboard(last_name):
     if not session.get('email'):
         flash("In order to access the dashboard you need to login.")
         return redirect(url_for('login'))
-    else:
-        return f"Welcome to your dashboard, {last_name}."
 
-    return render_template("after-login.html")
+    return render_template("after-login.html", last_name=last_name) # On html to be said Welcome to your dashboard <lastname>
 
 
 @app.route('/forget-password',  methods=["GET", "POST"])
@@ -126,7 +124,7 @@ def forget_password():
         new_password = request.form['new_password']
         found_doctor = Doctor.query.filter_by(email=email).first()
         if found_doctor:
-            new_hashed_password = generate_password_hash(new_password, method='sha256')
+            new_hashed_password = generate_password_hash(new_password)
             found_doctor.password = new_hashed_password
             db.session.commit()
             flash("New password was successfully saved. Please login again.")

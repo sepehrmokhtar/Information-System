@@ -164,6 +164,14 @@
     </style>
 </head>
 <body>
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                <p>{{msg}}</p>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    <h1>Welcome, Dr. {{ last_name }}!</h1>
     <div class="sidebar">
         <a href="#" class="navbar-brand">EHR System</a>
         <ul class="navbar-nav">
