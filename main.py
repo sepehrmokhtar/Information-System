@@ -22,6 +22,7 @@ class Doctor(db.Model):
     specialization = db.Column('specialization', db.String(100))
     email = db.Column('email', db.String(100), nullable=False, unique=True)
     password = db.Column('password', db.String(200), nullable=False)
+    # TODO: More direct information for doctors should be added.
 
     def __init__(self, first_name, last_name, specialization, email, password):
         self.first_name = first_name
@@ -40,6 +41,7 @@ class Patient(db.Model):
     last_name = db.Column('last_name', db.String(100), nullable=False)
     email = db.Column('email', db.String(100), nullable=False, unique=True)
     address = db.Column('address', db.String(100), nullable=False)
+    # TODO: Add a doctor email which shows the responsible doctor for specific patient.
 
     def __init__(self, first_name, last_name, email, address):
         self.first_name = first_name
@@ -72,11 +74,11 @@ def register():
                 db.session.commit()
                 flash("Doctor was successfully registered. Please login.")
                 return redirect(url_for("home"))
-            except Exception:
+            except Exception as e:
                 db.session.rollback()
-                flash("An error occurred while registering. Please try again.")
+                flash(f"An error occurred while registering: {str(e)}")
                 return redirect(url_for("home"))
-    return render_template("Doctor-Registration.html")
+    return render_template("register-doctor.html")
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -104,7 +106,7 @@ def login():
 @app.route("/logout")
 def logout():
     session.clear()
-    flash("You have been logged out!")
+    flash("You have been successfully logged out.")
     return redirect(url_for("home"))
 
 
@@ -114,13 +116,16 @@ def dashboard(last_name):
         flash("In order to access the dashboard you need to login.")
         return redirect(url_for('login'))
 
-    return render_template("after-login.html", last_name=last_name) # On html to be said Welcome to your dashboard <lastname>
+    #{% for item in values %}
+    #   <p> {here goes all the direct information of patient from Patient table}</p> # This should be added dashboard.html (not raw)
+    #{% endfor %}
+    return render_template("dashboard.html", last_name=last_name, values=Patient.query.filter_by(doctor_email=session.get('email')).all())
 
 
-@app.route('/forget-password',  methods=["GET", "POST"])
+@app.route('/forget-password', methods=["GET", "POST"])
 def forget_password():
     if request.method == 'POST':
-        email = request.form['email']
+        email = request.form['email'].strip().lower()
         new_password = request.form['new_password']
         found_doctor = Doctor.query.filter_by(email=email).first()
         if found_doctor:
@@ -130,6 +135,29 @@ def forget_password():
             flash("New password was successfully saved. Please login again.")
             return redirect(url_for('login'))
     return render_template("forget-password.html")
+
+
+@app.route('/profile', methods=["GET", "POST"])
+def profile():
+    if not session.get('email'):
+        flash("In order to access your profile you need to login.")
+        return redirect(url_for('login'))
+
+    doctor = Doctor.query.filter_by(email=session.get('email')).first()
+    if request.method == "POST":
+        doctor.first_name = request.form['firstName'] if 'firstName' in request.form else doctor.first_name
+        doctor.last_name = request.form['lastName'] if 'lastName' in request.form else doctor.last_name
+        doctor.specialization = request.form['specialization'] if 'specialization' in request.form else doctor.specialization
+        try:
+            db.session.commit()
+            flash("Doctor information was successfully edited.")
+        except Exception as e:
+            db.session.rollback()
+            flash(f"An error occurred while updating the profile: {str(e)}")
+        return redirect(url_for('profile'))
+
+    return render_template('doctor-profile.html', firstname=doctor.first_name, lastname=doctor.last_name,
+                           specialization=doctor.specialization) # Load the existing information of the doctor into the form.
 
 
 @app.route('/about-us')
