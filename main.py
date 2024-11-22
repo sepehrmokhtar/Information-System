@@ -12,6 +12,7 @@ app.permanent_session_lifetime = timedelta(days=1)
 
 db = SQLAlchemy(app)
 
+
 class Doctor(db.Model):
 
     __tablename__ = 'doctors'
@@ -19,26 +20,22 @@ class Doctor(db.Model):
     doctor_id = db.Column('doctor_id', db.Integer, primary_key=True) # Points to doctor_id in MySQL db
     first_name = db.Column('first_name', db.String(100), nullable=False)
     last_name = db.Column('last_name', db.String(100), nullable=False)
-    specialization = db.Column('specialization', db.String(100))
+    specialization = db.Column('specialization', db.String(100), nullable=False)
     email = db.Column('email', db.String(100), nullable=False, unique=True)
     password = db.Column('password', db.String(200))
     phone_number = db.Column('phone_number', db.String(20))
     organization = db.Column('organization', db.String(20))
     address = db.Column('address', db.String(100), nullable=False)
 
-
-
     def __init__(self, first_name, last_name, specialization, email, password, phone_number, organization, address):
         self.first_name = first_name
         self.last_name = last_name
-        self.profession = specialization
+        self.specialization = specialization
         self.email = email
         self.password = password
         self.phone_number = phone_number
         self.organization = organization
         self.address = address
-
-
 
 
 class Patient(db.Model):
@@ -51,9 +48,9 @@ class Patient(db.Model):
     email = db.Column('email', db.String(100), nullable=False, unique=True)
     address = db.Column('address', db.String(100), nullable=False)
     gender = db.Column('gender', db.String(100), nullable=False)
-    age = db.Column('age', db.Integer(100), nullable=False)
+    age = db.Column('age', db.Integer, nullable=False)
     race = db.Column('race', db.String(100), nullable=False)
-    insurance_number = db.Column('insurance_number', db.char(20), nullable=False)
+    insurance_number = db.Column('insurance_number', db.String(20), nullable=False)
     phone_number = db.Column('phone_number', db.String(100), nullable=False)
     admission_date = db.Column('admission_date', db.Date, nullable=False)
     responsible_doctor = db.Column('responsible_doctor', db.String(100), nullable=False)
@@ -83,6 +80,9 @@ def register():
         first_name = request.form['firstName']
         last_name = request.form['lastName']
         specialization = request.form['specialization']
+        phone_number = request.form['phone_number']
+        organization = request.form['organization']
+        address = request.form['address']
         email = request.form['email'].strip().lower()  # Normalize email
         password = request.form['password']
         hashed_password = generate_password_hash(password)  # Default is PBKDF2-SHA256
@@ -90,7 +90,7 @@ def register():
             flash("Doctor is already registered.")
             return redirect(url_for("home"))
         else:
-            doctor = Doctor(first_name, last_name, specialization, email, hashed_password)
+            doctor = Doctor(first_name, last_name, specialization, email, hashed_password, phone_number, organization, address)
             try:
                 db.session.add(doctor)
                 db.session.commit()
@@ -141,7 +141,7 @@ def dashboard(last_name):
     #{% for item in values %}
     #   <p> {here goes all the direct information of patient from Patient table}</p> # This should be added dashboard.html (not raw)
     #{% endfor %}
-    return render_template("dashboard.html", last_name=last_name, values=Patient.query.filter_by(doctor_email=session.get('email')).all())
+    return render_template("dashboard.html") #, last_name=last_name, values=Patient.query.filter_by(doctor_email=session.get('email')).all())
 
 
 @app.route('/forget-password', methods=["GET", "POST"])
@@ -170,6 +170,9 @@ def profile():
         doctor.first_name = request.form['firstName'] if 'firstName' in request.form else doctor.first_name
         doctor.last_name = request.form['lastName'] if 'lastName' in request.form else doctor.last_name
         doctor.specialization = request.form['specialization'] if 'specialization' in request.form else doctor.specialization
+        doctor.phone_number = request.form['phone_number'] if 'phone_number' in request.form else doctor.phone_number
+        doctor.organization = request.form['organization'] if 'organization' in request.form else doctor.organization
+        doctor.address = request.form['address'] if 'address' in request.form else doctor.address
         try:
             db.session.commit()
             flash("Doctor information was successfully edited.")
@@ -179,7 +182,8 @@ def profile():
         return redirect(url_for('profile'))
 
     return render_template('doctor-profile.html', firstname=doctor.first_name, lastname=doctor.last_name,
-                           specialization=doctor.specialization) # Load the existing information of the doctor into the form.
+                           specialization=doctor.specialization, phone_number=doctor.phone_number,
+                           organization=doctor.organization, address=doctor.address) # Load the existing information of the doctor into the form.
 
 
 @app.route('/about-us')
