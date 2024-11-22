@@ -5,7 +5,7 @@ from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash # Used to hash passwords stored in database.
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://sql7741129:XUQ35MWg9D@sql7.freesqldatabase.com/sql7741129' # install the pymysql. Created MySQL database runs on localhost port 3306
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://sql7746745:qVMtw78yWQ@sql7.freesqldatabase.com/sql7746745' # install the pymysql. Created MySQL database runs on localhost port 3306
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "12345678910" # In order to safely store session cookies.
 app.permanent_session_lifetime = timedelta(days=1)
@@ -21,15 +21,24 @@ class Doctor(db.Model):
     last_name = db.Column('last_name', db.String(100), nullable=False)
     specialization = db.Column('specialization', db.String(100))
     email = db.Column('email', db.String(100), nullable=False, unique=True)
-    password = db.Column('password', db.String(200), nullable=False)
-    # TODO: More direct information for doctors should be added.
+    password = db.Column('password', db.String(200))
+    phone_number = db.Column('phone_number', db.String(20))
+    organization = db.Column('organization', db.String(20))
+    address = db.Column('address', db.String(100), nullable=False)
 
-    def __init__(self, first_name, last_name, specialization, email, password):
+
+
+    def __init__(self, first_name, last_name, specialization, email, password, phone_number, organization, address):
         self.first_name = first_name
         self.last_name = last_name
-        self.specialization = specialization
+        self.profession = specialization
         self.email = email
         self.password = password
+        self.phone_number = phone_number
+        self.organization = organization
+        self.address = address
+
+
 
 
 class Patient(db.Model):
@@ -41,13 +50,26 @@ class Patient(db.Model):
     last_name = db.Column('last_name', db.String(100), nullable=False)
     email = db.Column('email', db.String(100), nullable=False, unique=True)
     address = db.Column('address', db.String(100), nullable=False)
-    # TODO: Add a doctor email which shows the responsible doctor for specific patient.
+    gender = db.Column('gender', db.String(100), nullable=False)
+    age = db.Column('age', db.Integer(100), nullable=False)
+    race = db.Column('race', db.String(100), nullable=False)
+    insurance_number = db.Column('insurance_number', db.char(20), nullable=False)
+    phone_number = db.Column('phone_number', db.String(100), nullable=False)
+    admission_date = db.Column('admission_date', db.Date, nullable=False)
+    responsible_doctor = db.Column('responsible_doctor', db.String(100), nullable=False)
 
-    def __init__(self, first_name, last_name, email, address):
+    def __init__(self, first_name, last_name, email, address, gender, age, race, insurance_number, phone_number, admission_date, responsible_doctor):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.address = address
+        self.gender = gender
+        self.age = age
+        self.race = race
+        self.insurance_number = insurance_number
+        self.phone_number = phone_number
+        self.admission_date = admission_date
+        self.responsible_doctor = responsible_doctor
 
 
 @app.route('/')
