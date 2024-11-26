@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Doctor Registration</title>
+        <link rel="stylesheet" href="../static/style-css-method.css">
+    </head>
+
+</html>
+<body>
+    <p style="display: none;">{% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                   {{msg}}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}</p>
+        <!-- Sidebar Navigation Bar with Background Image -->
+        <nav class="sidebar" style="display: flex; flex-direction: column; justify-content: space-between; height: 100vh; background-size: cover;background-image: url('medical background.jpeg'); background-position: center;">
+            <div class="sidebar">
+                <a href="#" class="navbar-brand">EHR System</a>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a href="../about-us" class="nav-link">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../login" class="nav-link">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="../register-doctor" class="nav-link">Registration</a>
+                    </li>
+                </ul>
+            </div>
+           
+           <!-- Contact Information at the Bottom -->
+           <div class="sidebar-contact">
+               <h3 style="color: #095d7e;">Contact</h3>
+               <p style="color: #095d7e;">Email: <a href="mailto:info@SYSP.de" style="color: #095d7e; text-decoration: none;">info@SYSP.de</a></p>
+               <p style="color: #095d7e;">TEL: +49 666 666 2025</p>
+           </div>
+       </nav>
+</body>

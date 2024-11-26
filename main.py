@@ -181,7 +181,7 @@ def profile():
             flash(f"An error occurred while updating the profile: {str(e)}")
         return redirect(url_for('profile'))
 
-    return render_template('doctor-profile.html', firstname=doctor.first_name, lastname=doctor.last_name,
+    return render_template('view-profile.html', firstname=doctor.first_name, lastname=doctor.last_name,
                            specialization=doctor.specialization, phone_number=doctor.phone_number,
                            organization=doctor.organization, address=doctor.address) # Load the existing information of the doctor into the form.
 
