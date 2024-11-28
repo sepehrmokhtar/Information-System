@@ -156,6 +156,8 @@ def forget_password():
             db.session.commit()
             flash("New password was successfully saved. Please login again.")
             return redirect(url_for('login'))
+        else:
+            flash("Please make sure that the doctor is registered.")
     return render_template("forget-password.html")
 
 
