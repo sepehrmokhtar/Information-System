@@ -140,10 +140,7 @@ def dashboard(last_name):
         flash("In order to access the dashboard you need to login.")
         return redirect(url_for('login'))
 
-    #{% for item in values %}
-    #   <p> {here goes all the direct information of patient from Patient table}</p> # This should be added dashboard.html (not raw)
-    #{% endfor %}
-    return render_template("dashboard.html") #, last_name=last_name, values=Patient.query.filter_by(doctor_email=session.get('email')).all())
+    return render_template("dashboard.html", last_name=last_name)
 
 
 @app.route('/dashboard/add-patient', methods=["GET", "POST"])
@@ -226,6 +223,18 @@ def add_patient():
     return render_template("add-patient.html")
 
 
+@app.route('/dashboard/view-patient')
+def view():
+    if not session.get('email'):
+        flash("In order to see patients list and access your dashboard you need to login.")
+        return redirect(url_for('login'))
+
+    #{% for item in values %}
+    #   <p> {here goes all the direct information of patient from Patient table}</p> # This should be added dashboard.html (not raw)
+    #{% endfor %}
+    return render_template("patient-list.html", values=Patient.query.filter_by(doctor_email=session.get('email')).all())
+
+
 @app.route('/forget-password', methods=["GET", "POST"])
 def forget_password():
     if request.method == 'POST':
@@ -279,12 +288,6 @@ def about():
 def info():
     return render_template('info.html')
 
-
-'''
-@app.route('/view')
-def view():
-     #TODO: Will view the patient database
-'''
 
 if __name__ == "__main__":
     with app.app_context():
