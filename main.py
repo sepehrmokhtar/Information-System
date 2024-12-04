@@ -12,6 +12,8 @@ app.permanent_session_lifetime = timedelta(days=1)
 
 db = SQLAlchemy(app)
 
+class PatientMedInfo():
+    pass
 
 class Doctor(db.Model):
 
@@ -142,6 +144,86 @@ def dashboard(last_name):
     #   <p> {here goes all the direct information of patient from Patient table}</p> # This should be added dashboard.html (not raw)
     #{% endfor %}
     return render_template("dashboard.html") #, last_name=last_name, values=Patient.query.filter_by(doctor_email=session.get('email')).all())
+
+
+@app.route('/dashboard/add-patient', methods=["GET", "POST"])
+def add_patient():
+    if not session.get('email'):
+        flash("In order to add patient and access your dashboard you need to login.")
+        return redirect(url_for('login'))
+
+    if request.method == "POST":
+        # Direct Information
+        doctor_email = request.form['doctor_email']
+        admission_date = request.form['admission_date']
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        patient_email = request.form['patient_email']
+        address = request.form['address']
+        insurance_number = request.form['insurance_number']
+        phone_number = request.form['phone_number']
+
+        # Demographics
+        gender = request.form['gender']
+        race = request.form['race']
+        age = request.form['age']
+        family_status = request.form['family_status'] # TODO: add them to Patient object.
+        occupation = request.form['occupation']
+        height = request.form['height']
+        weight = request.form['weight']
+
+        # Vital Signs
+        core_temperature = request.form['core_temperature']
+        heart_rate = request.form['heart_rate']
+        respiratory_rate = request.form['respiratory_rate']
+        blood_oxygen = request.form['blood_oxygen']
+        blood_pressure = request.form['blood_pressure']
+
+        # Medical History
+        disease_history = request.form['disease_history']
+        family_history = request.form['family_history']
+        immunization_status = request.form.getlist('immunization_status')
+        food_allergies = request.form['food_allergies']
+        medication_allergies = request.form['medication_allergies']
+        other_allergies = request.form['other_allergies']
+        smoking_history = request.form['smoking_history']
+        alcoholic = request.form['alcoholic']
+        current_med_name = request.form['current_med_name']
+        current_med_dosage = request.form['current_med_dosage']
+        current_med_frequency = request.form['current_med_frequency']
+        past_medication = request.form['past_medication']
+        wbc = request.form['wbc']
+        rbc = request.form['rbc']
+        hco3 = request.form['hco3']
+        glucose = request.form['glucose']
+
+        # History of Present Illness
+        chief_complaint = request.form['chief_complaint']
+        soap_notes = request.form['soap_notes']
+        ros = request.form['ros']
+
+        concatenated_immunization_status = ','.join(immunization_status)
+
+        patient = Patient(firstname, lastname, patient_email, address, gender, age, race, insurance_number, phone_number,
+                          admission_date, doctor_email)
+
+        patient_med_info = PatientMedInfo(height, weight, core_temperature, heart_rate, respiratory_rate, blood_oxygen,
+                                          blood_pressure, disease_history, family_history, concatenated_immunization_status,
+                                          food_allergies, medication_allergies, other_allergies, smoking_history, alcoholic,
+                                          current_med_name, current_med_dosage, current_med_frequency, past_medication, wbc,
+                                          rbc, hco3, glucose, chief_complaint, soap_notes, ros)
+        try:
+            db.session.add(patient)
+            db.session.add(patient_med_info)
+            db.session.commit()
+            flash("New patient was successfully added.")
+            return redirect(url_for("dashboard"))
+        except Exception as e:
+            db.session.rollback()
+            flash(f"An error occurred while adding information: {str(e)}")
+            return redirect(url_for("dashboard"))
+
+    return render_template("add-patient.html")
 
 
 @app.route('/forget-password', methods=["GET", "POST"])
