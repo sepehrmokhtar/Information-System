@@ -7,13 +7,13 @@
     <link href="../static/style-css-method.css" rel="stylesheet">
 </head>
 <body>
-    <p style="display: none;">{% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for msg in messages %}
                    {{msg}}
             {% endfor %}
         {% endif %}
-    {% endwith %}</p>
+    {% endwith %}
     <!-- Sidebar Navigation Bar with Background Image -->
     <nav class="sidebar" style="display: flex; flex-direction: column; justify-content: space-between; height: 100vh; background-size: cover; background-position: center;">
         <div>

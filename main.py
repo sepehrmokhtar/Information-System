@@ -324,7 +324,7 @@ def forget_password():
     return render_template("forget-password.html")
 
 
-@app.route('/profile', methods=["GET", "POST"])
+@app.route('/dashboard/profile', methods=["GET", "POST"])
 def profile():
     if not session.get('email'):
         flash("In order to access your profile you need to login.")

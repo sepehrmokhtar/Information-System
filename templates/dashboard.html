@@ -54,7 +54,7 @@
         }
 
         .nav-link:hover {
-            background-color: #e2fcd6; /* Light green for hover effect */
+            background-color: a0dbdb; /* Light green for hover effect */
         }
 
         /* Main Content */
@@ -156,23 +156,20 @@ h2 {
         }
     </style>
     <body>
-        <p style="display: none;">{% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for msg in messages %}
-                       {{msg}}
-                {% endfor %}
-            {% endif %}
-        {% endwith %}</p>
-        <nav class="sidebar" style="display: flex; flex-direction: column; justify-content: space-between; height: 100vh; background-image: url('medical background.jpeg'); background-size: cover; background-position: center;">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for msg in messages %}
+                   {{msg}}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+        <nav class="sidebar">
             <div>
                 <ul class="navbar-nav">
                     <a href="#" class="navbar-brand">EHR System</a>
-                    <li class="nav-item"><a href="../about-us" class="nav-link">About Us</a></li>
                     <li class="nav-item"><a href="../" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="../login" class="nav-link">Login</a></li>
-                    <li class="nav-item"><a href="../register-doctor" class="nav-link">Registration</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="window.location.href='patient-list.html'">Patient List</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="window.location.href='view-Profile.html'">View Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="window.location.href='../dashboard/view-patient'">Patient List</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="window.location.href='../dashboard/profile'">View Profile</a></li>
                 </ul>
             </div>
         </nav>

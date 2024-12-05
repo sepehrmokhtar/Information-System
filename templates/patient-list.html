@@ -218,13 +218,16 @@
     </style>
 </head>
 <body>
-    <p style="display: none;">{% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for msg in messages %}
                    {{msg}}
             {% endfor %}
         {% endif %}
-    {% endwith %}</p>
+    {% endwith %}
+    {% for item in values %}
+       <p> Name : {{item.first_name}}  {{item.last_name}} , Email : {{item.email}} , Insurance Number : {{item.insurance_number}} , Admission Date : {{item.admission_date}}</p> # This should be added dashboard.html (not raw)
+    {% endfor %}
     <div class="alerts-container"></div>
     <!-- Sidebar Navigation Bar with Background Image --> 
     <nav class="sidebar" style="display: flex; flex-direction: column; justify-content: space-between; height: 100vh; background-size: cover; background-position: center;">

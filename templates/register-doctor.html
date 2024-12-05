@@ -35,13 +35,13 @@
     </style>
 </head>
 <body>
-    <p style="display: none;">{% with messages = get_flashed_messages() %}
+    {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for msg in messages %}
                    {{msg}}
             {% endfor %}
         {% endif %}
-    {% endwith %}</p>
+    {% endwith %}
     <div class="sidebar">
         <a href="#" class="navbar-brand">EHR System</a>
         <ul class="navbar-nav">
