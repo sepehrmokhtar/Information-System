@@ -56,8 +56,11 @@ class Patient(db.Model):
     phone_number = db.Column('phone_number', db.String(100), nullable=False)
     admission_date = db.Column('admission_date', db.Date, nullable=False)
     responsible_doctor = db.Column('responsible_doctor', db.String(100), nullable=False)
+    family_status = db.Column('family_status', db.String(100), nullable=False)
+    occupation = db.Column('occupation', db.String(100), nullable=False)
 
-    def __init__(self, first_name, last_name, email, address, gender, age, race, insurance_number, phone_number, admission_date, responsible_doctor):
+    def __init__(self, first_name, last_name, email, address, gender, age, race, insurance_number,
+                 phone_number, admission_date, responsible_doctor, family_status, occupation):
         self.first_name = first_name
         self.last_name = last_name
         self.email = email
@@ -69,6 +72,76 @@ class Patient(db.Model):
         self.phone_number = phone_number
         self.admission_date = admission_date
         self.responsible_doctor = responsible_doctor
+        self.family_status = family_status
+        self.occupation = occupation
+
+
+class PatientMedInfo(db.Model):
+
+    __tablename__ = 'PatientMedInfo'
+
+    patient_id = db.Column(db.Integer, db.ForeignKey('patients.patient_id'), nullable=False)
+    height = db.Column(db.Float, nullable=False)
+    weight = db.Column(db.Float, nullable=False)
+    heart_rate = db.Column('heart_rate', db.Integer, nullable=False)
+    respiratory_rate = db.Column('respiratory_rate', db.Integer, nullable=False)
+    core_temperature = db.Column('temperature', db.Float, nullable=False)
+    blood_oxygen = db.Column('blood_oxygen', db.Integer, nullable=False)
+    blood_pressure = db.Column('blood_pressure', db.Integer, nullable=False)
+    disease_history = db.Column('disease_history', db.Text, nullable=True)
+    family_history = db.Column('family_history', db.Text, nullable=True)
+    immunization_stats = db.Column('immunization_stats', db.Text, nullable=True)
+    food_allergies = db.Column('food_allergies', db.String(200), nullable=True)
+    medication_allergies = db.Column('medication_allergies', db.String(200), nullable=True)
+    other_allergies = db.Column('other_allergies', db.String(200), nullable=True)
+    smoking_history = db.Column('smoking_history', db.Boolean, nullable=False)
+    alcoholic = db.Column('alcoholic', db.Boolean, nullable=False)
+    current_med_name = db.Column('current_med_name', db.String(200), nullable=True)
+    current_med_dosage = db.Column('current_med_dosage', db.String(100), nullable=True)
+    current_med_frequency = db.Column('current_med_frequency', db.String(100), nullable=True)
+    past_medication = db.Column('past_medication', db.String(200), nullable=True)
+    wbc = db.Column('wbc', db.Float, nullable=True)
+    rbc = db.Column('rbc', db.Float, nullable=True)
+    hco3 = db.Column('hco3', db.Float, nullable=True)
+    glucose = db.Column('glucose', db.Float, nullable=True)
+    chief_complaint = db.Column('chief_complaint', db.Text, nullable=True)
+    soap_notes = db.Column('soap_notes', db.Text, nullable=True)
+    ros = db.Column('ros', db.Text, nullable=True)
+
+    def __init__(self, patient_id, height, weight, heart_rate, respiratory_rate, core_temperature,
+                 blood_oxygen, blood_pressure, disease_history=None, family_history=None,
+                 immunization_stats=None, food_allergies=None, medication_allergies=None,
+                 other_allergies=None, smoking_history=False, alcoholic=False, current_med_name=None,
+                 current_med_dosage=None, current_med_frequency=None, past_medication=None,
+                 wbc=None, rbc=None, hco3=None, glucose=None, chief_complaint=None, soap_notes=None,
+                 ros=None):
+        self.patient_id = patient_id
+        self.height = height
+        self.weight = weight
+        self.heart_rate = heart_rate
+        self.respiratory_rate = respiratory_rate
+        self.core_temperature = core_temperature
+        self.blood_oxygen = blood_oxygen
+        self.blood_pressure = blood_pressure
+        self.disease_history = disease_history
+        self.family_history = family_history
+        self.immunization_stats = immunization_stats
+        self.food_allergies = food_allergies
+        self.medication_allergies = medication_allergies
+        self.other_allergies = other_allergies
+        self.smoking_history = smoking_history
+        self.alcoholic = alcoholic
+        self.current_med_name = current_med_name
+        self.current_med_dosage = current_med_dosage
+        self.current_med_frequency = current_med_frequency
+        self.past_medication = past_medication
+        self.wbc = wbc
+        self.rbc = rbc
+        self.hco3 = hco3
+        self.glucose = glucose
+        self.chief_complaint = chief_complaint
+        self.soap_notes = soap_notes
+        self.ros = ros
 
 
 @app.route('/')
