@@ -16,6 +16,7 @@ body {
 .sidebar {
     width: 250px;
     height: 100vh;
+    background-image: url('/static/medicalbackground.jpeg');
     background-color: #14967f; /* Teal for sidebar */
     padding: 20px;
     position: fixed;
