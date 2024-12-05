@@ -48,7 +48,8 @@ CREATE TABLE patients (
 """
 
 PatientMedInfo = """
-CREATE TABLE PatientMedInfo (                           
+CREATE TABLE PatientMedInfo (
+    patient_med_info_id INT NOT NULL AUTO_INCREMENT,                           
     patient_id INT NOT NULL,                       
     height FLOAT NOT NULL,
     weight FLOAT NOT NULL,
@@ -76,6 +77,7 @@ CREATE TABLE PatientMedInfo (
     chief_complaint TEXT,
     soap_notes TEXT,
     ros TEXT,
+    PRIMARY KEY (patient_med_info_id),
     FOREIGN KEY (patient_id) REFERENCES patients(patient_id)
 );
 """

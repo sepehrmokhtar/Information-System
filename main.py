@@ -80,6 +80,7 @@ class PatientMedInfo(db.Model):
 
     __tablename__ = 'PatientMedInfo'
 
+    patient_med_info_id = db.Column('patient_med_info_id', db.Integer, primary_key=True)
     patient_id = db.Column(db.Integer, db.ForeignKey('patients.patient_id'), nullable=False)
     height = db.Column(db.Float, nullable=False)
     weight = db.Column(db.Float, nullable=False)
@@ -108,13 +109,14 @@ class PatientMedInfo(db.Model):
     soap_notes = db.Column('soap_notes', db.Text, nullable=True)
     ros = db.Column('ros', db.Text, nullable=True)
 
-    def __init__(self, patient_id, height, weight, heart_rate, respiratory_rate, core_temperature,
+    def __init__(self, patient_med_info_id, patient_id, height, weight, heart_rate, respiratory_rate, core_temperature,
                  blood_oxygen, blood_pressure, disease_history=None, family_history=None,
                  immunization_stats=None, food_allergies=None, medication_allergies=None,
                  other_allergies=None, smoking_history=False, alcoholic=False, current_med_name=None,
                  current_med_dosage=None, current_med_frequency=None, past_medication=None,
                  wbc=None, rbc=None, hco3=None, glucose=None, chief_complaint=None, soap_notes=None,
                  ros=None):
+        self.patient_med_info_id = patient_med_info_id
         self.patient_id = patient_id
         self.height = height
         self.weight = weight
