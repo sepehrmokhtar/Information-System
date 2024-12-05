@@ -12,9 +12,6 @@ app.permanent_session_lifetime = timedelta(days=1)
 
 db = SQLAlchemy(app)
 
-class PatientMedInfo():
-    pass
-
 class Doctor(db.Model):
 
     __tablename__ = 'doctors'
@@ -277,7 +274,7 @@ def add_patient():
         concatenated_immunization_status = ','.join(immunization_status)
 
         patient = Patient(firstname, lastname, patient_email, address, gender, age, race, insurance_number, phone_number,
-                          admission_date, doctor_email)
+                          admission_date, doctor_email, family_status, occupation)
 
         patient_med_info = PatientMedInfo(height, weight, core_temperature, heart_rate, respiratory_rate, blood_oxygen,
                                           blood_pressure, disease_history, family_history, concatenated_immunization_status,
