@@ -304,7 +304,7 @@ def view():
     #{% for item in values %}
     #   <p> {here goes all the direct information of patient from Patient table}</p> # This should be added dashboard.html (not raw)
     #{% endfor %}
-    return render_template("patient-list.html", values=Patient.query.filter_by(doctor_email=session.get('email')).all())
+    return render_template("patient-list.html", values=Patient.query.filter_by(responsible_doctor=session.get('email')).all())
 
 
 @app.route('/forget-password', methods=["GET", "POST"])
