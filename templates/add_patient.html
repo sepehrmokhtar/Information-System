@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Information Form</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    
+        /* Body */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f9ff; /* Light blue for background */
+            color: #095d7e; /* Darker blue for text */
+        }
+    
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            height: 100vh;
+            background-image: url('/static/medicalbackground.jpeg');
+            background-color: #14967f; /* Teal for sidebar */
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            border-top-right-radius: 15px;
+            border-top-left-radius: 15px;
+        }
+    
+        .navbar-brand {
+            color: #095d7e; /* Darker blue for brand text */
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: block;
+            text-decoration: none;
+        }
+    
+        .navbar-nav {
+            list-style: none;
+            padding: 0;
+        }
+    
+        .nav-item {
+            margin: 10px 0;
+        }
+    
+        .nav-link {
+            color: #095d7e; /* Change the color of the navigation links to #095d7e */
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+    
+        .nav-link:hover {
+            background-color: #a0dbdb; /* Darker background color on hover */
+            transform: scale(1.05); /* Slightly grow text on hover */
+            border-radius: 8px;
+        }
+    
+        /* Main Content */
+        .main-content {
+            margin-left: 270px; /* Adjust for sidebar width */
+            padding: 20px;
+        }
+    
+        .hero {
+            background-color: #ccecee; /* Light teal for hero section */
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    
+    
+        .info-text h2,
+        .info-text h3 {
+            color: #14967f; /* Teal for headings */
+        }
+    
+        .info-text p,
+        .info-text ul {
+            margin: 10px 0;
+        }
+    
+        ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+    
+        /* Input Styles */
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="password"],
+        textarea {
+            width: 100%; /* Full-width on larger screens, 50% on small screens */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px; /* Space between fields */
+            font-size: 1em; /* Increase font size for readability */
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        input:focus,
+        textarea:focus {
+            border-color: #14967f; /* Focused input border color */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Focused input shadow */
+            outline: none;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                border-radius: 0;
+            }
+    
+            .main-content {
+                margin-left: 0;
+            }
+    
+            .hero {
+                padding: 15px;
+            }
+    
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            input[type="password"],
+            textarea {
+                width: 100%; /* Full-width inputs on mobile */
+                padding: 12px;
+                font-size: 1em;
+            }
+        }
+    
+        /* Button Styles */
+        button {
+            background-color: #14967f; /* Teal background */
+            color: #fff;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    
+        button:hover {
+            background-color: #0e7b5e; /* Darker teal on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="sidebar">
+        <a href="#" class="navbar-brand">Medical Portal</a>
+        <ul class="navbar-nav">
+            <li class="nav-item"><a href="#" class="nav-link">Home</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Patients</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Appointments</a></li>
+            <li class="nav-item"><a href="#" class="nav-link">Settings</a></li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <section class="hero">
+            <h2>Add Patient</h2>
+            <form>
+                <!-- Doctor Details -->
+                <fieldset>
+                    <legend>Doctor Details</legend>
+                    <label for="doctor-email">Doctor E-mail:</label>
+                    <input type="email" id="doctor-email" name="doctor-email">
+                    
+                    <label for="admission-date">Admission Date:</label>
+                    <input type="date" id="admission-date" name="admission-date">
+                </fieldset>
+
+                <!-- Patient Basic Information -->
+                <fieldset>
+                    <legend>Patient Information</legend>
+                    <label for="first-name">First Name:</label>
+                    <input type="text" id="first-name" name="first-name">
+
+                    <label for="last-name">Last Name:</label>
+                    <input type="text" id="last-name" name="last-name">
+
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email">
+
+                    <label for="address">Address:</label>
+                    <textarea id="address" name="address" rows="3"></textarea>
+
+                    <label for="insurance-number">Insurance Number:</label>
+                    <input type="text" id="insurance-number" name="insurance-number">
+
+                    <label for="phone-number">Phone Number:</label>
+                    <input type="tel" id="phone-number" name="phone-number">
+                </fieldset>
+
+                <!-- Demographic Information -->
+                <fieldset>
+                    <legend>Demographic Information</legend>
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+
+                    <label for="race">Race:</label>
+                    <input type="text" id="race" name="race">
+
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age">
+
+                    <label for="family-status">Family Status:</label>
+                    <input type="text" id="family-status" name="family-status">
+
+                    <label for="occupation">Occupation:</label>
+                    <input type="text" id="occupation" name="occupation">
+
+                    <label for="height">Height:</label>
+                    <input type="text" id="height" name="height">
+
+                    <label for="weight">Weight:</label>
+                    <input type="text" id="weight" name="weight">
+                </fieldset>
+
+                <!-- Vital Signs -->
+                <fieldset>
+                    <legend>Vital Signs</legend>
+                    <label for="core-temp">Core Temperature:</label>
+                    <input type="text" id="core-temp" name="core-temp">
+
+                    <label for="heart-rate">Heart Rate:</label>
+                    <input type="text" id="heart-rate" name="heart-rate">
+
+                    <label for="respiratory-rate">Respiratory Rate:</label>
+                    <input type="text" id="respiratory-rate" name="respiratory-rate">
+
+                    <label for="blood-oxygen">Blood Oxygen:</label>
+                    <input type="text" id="blood-oxygen" name="blood-oxygen">
+
+                    <label for="blood-pressure">Blood Pressure:</label>
+                    <input type="text" id="blood-pressure" name="blood-pressure">
+                </fieldset>
+
+                <!-- Medical History -->
+                <fieldset>
+                    <legend>Medical History</legend>
+                    <label for="disease-history">Disease History:</label>
+                    <textarea id="disease-history" name="disease-history" rows="4"></textarea>
+
+                    <label for="immunization-status">Immunization Status:</label>
+                    <textarea id="immunization-status" name="immunization-status" rows="4">HFB-MMB_HEPATITIS A-HEPATITIS B-FLU-HPV_YELLOW FEVER</textarea>
+
+                    <label for="family-history">Family History:</label>
+                    <textarea id="family-history" name="family-history" rows="3"></textarea>
+                </fieldset>
+
+                <!-- Allergies and Habits -->
+                <fieldset>
+                    <legend>Allergies and Habits</legend>
+                    <label for="food-allergy">Food Allergy:</label>
+                    <textarea id="food-allergy" name="food-allergy" rows="3"></textarea>
+
+                    <label for="medication-allergy">Medication Allergy:</label>
+                    <textarea id="medication-allergy" name="medication-allergy" rows="3"></textarea>
+
+                    <label for="other-allergies">Other Allergies:</label>
+                    <textarea id="other-allergies" name="other-allergies" rows="3"></textarea>
+
+                    <label for="smoking-history">Smoking History:</label>
+                    <select id="smoking-history" name="smoking-history">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                        <option value="occasionally">Occasionally</option>
+                    </select>
+
+                    <label for="alcohol-history">Alcohol History:</label>
+                    <select id="alcohol-history" name="alcohol-history">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                        <option value="occasionally">Occasionally</option>
+                    </select>
+                </fieldset>
+
+                <!-- Current and Past Medication -->
+                <fieldset>
+                    <legend>Medication</legend>
+                    <label for="current-medication">Current Medication:</label>
+                    <textarea id="current-medication" name="current-medication" rows="3" placeholder="Name: Dosage: Frequency:"></textarea>
+
+                    <label for="past-medication">Past Medication:</label>
+                    <textarea id="past-medication" name="past-medication" rows="3"></textarea>
+                </fieldset>
+
+                <!-- Laboratory Test Results -->
+                <fieldset>
+                    <legend>Laboratory Test Results</legend>
+                    <label for="lab-results">Results:</label>
+                    <textarea id="lab-results" name="lab-results" rows="4" placeholder="WBG: - RBC: - HCO3: - Glucose:"></textarea>
+                </fieldset>
+
+                <!-- Present Illness -->
+                <fieldset>
+                    <legend>History of Present Illness</legend>
+                    <label for="chief-complaint">Chief Complaint:</label>
+                    <textarea id="chief-complaint" name="chief-complaint" rows="3"></textarea>
+
+                    <label for="soap-notes">SOAP Notes:</label>
+                    <textarea id="soap-notes" name="soap-notes" rows="4"></textarea>
+
+                    <label for="ros">ROS:</label>
+                    <textarea id="ros" name="ros" rows="4"></textarea>
+                </fieldset>
+
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

@@ -33,7 +33,7 @@
         }
 
         .navbar-brand {
-            color: #fff; /* White text for contrast */
+            color: #095d7e; /* White text for contrast */
             font-size: 1.5em;
             margin-bottom: 20px;
             display: block;
@@ -50,7 +50,7 @@
         }
 
         .nav-link {
-            color: #fff; /* White for links */
+            color: #095d7e; /* White for links */
             text-decoration: none;
             padding: 10px;
             display: block;
@@ -58,7 +58,7 @@
         }
 
         .nav-link:hover {
-            background-color: #095d7e; /* Light green for hover effect */
+            background-color: #a0dbdb; /* Light green for hover effect */
             transform: scale(1.1); /* Grow the text size on hover */
         }
 
@@ -236,10 +236,9 @@
                 <a href="#" class="navbar-brand">EHR System</a>
                 <li class="nav-item"><a href="../about-us" class="nav-link">About Us</a></li>
                 <li class="nav-item"><a href="../" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="../login" class="nav-link">Login</a></li>
-                <li class="nav-item"><a href="../register-doctor" class="nav-link">Registration</a></li>
                 <li class="nav-item"><a class="nav-link" onclick="window.location.href='Dashboard.html'">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" onclicj="window.location.href='view-profile.html'">View Profile</a></li> 
+                <li class="nav-item"><a class="nav-link" onclick="window.location.href='view-profile.html'">View Profile</a></li>
+                <li class="nav-item"><a class="nav-link" onclick="window.location.href='../dashboard/add_patient'">Add Patient</a></li>
             </ul>
         </div>
     </nav> 
@@ -259,33 +258,13 @@
             </div>
             <div class="main row justify-content-center"></div>
                 <form action="" id="patient-form" class="row justify-content-center mb-4" autocomplete="off">
-                    <div class="col-8 md-3">
-                        <label for="first_name">First Name</label>
-                        <input class="form-control" id="first_name" type="text" placeholder="Enter Patient's First Name">
-                    </div>
-                    <div class="col-8 md-3">
-                        <label for="last_name">Last Name</label>
-                        <input class="form-control" id="last_name" type="text" placeholder="Enter Patient's Last Name">
-                    </div>
-                    <div class="col-8 md-3">
-                        <label for="patient_id">Patient ID</label>
-                        <input class="form-control" id="patient_id" type="text" placeholder="Enter Patient's ID">
-                    </div>
-                    <div class="col-8 md-3">
-                        <label for="condition">Patient Condition</label>
-                        <input class="form-control" id="condition" type="text" placeholder="Enter Patient's Conditions">
-                    </div>
-                    <div class="col-8">
-                        <input class="btn btn-success add-btn" type="submit" value="submit">
-                    </div>
                     <div class="col-8 mt-5" style="color: #f1f9ff">
                         <table class="table table-striped">
                             <thread>
                             <tr>
-                                <th>First Name</th>
-                                <th>Last name</th>
-                                <th>Patient ID</th>
-                                <th>Patient Condition</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Insurance Number</th>
                                 <th>Actions</th>
                             </tr> 
                             </thread>
@@ -294,7 +273,6 @@
                                     <td>John</td>
                                     <td>Doe</td>
                                     <td>12345</td>
-                                    <td>T2D</td>
                                     <td>
                                         <a href="#" class="btn btn-warning btn-sm edit">Edit</a>
                                         <a href="#" class="btn btn-danger btn-sm delete">Delete</a>
