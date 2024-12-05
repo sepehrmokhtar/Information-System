@@ -292,7 +292,7 @@ def add_patient():
             flash(f"An error occurred while adding information: {str(e)}")
             return redirect(url_for("dashboard"))
 
-    return render_template("add-patient.html")
+    return render_template("add_patient.html")
 
 
 @app.route('/dashboard/view-patient')
