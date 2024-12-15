@@ -224,51 +224,51 @@ def add_patient():
     if request.method == "POST":
         # Direct Information
         doctor_email = request.form['doctor_email']
-        admission_date = request.form['admission_date']
-        firstname = request.form['firstname']
-        lastname = request.form['lastname']
-        patient_email = request.form['patient_email']
+        admission_date = request.form['admission-date']
+        firstname = request.form['first-name']
+        lastname = request.form['last-name']
+        patient_email = request.form['email']
         address = request.form['address']
-        insurance_number = request.form['insurance_number']
-        phone_number = request.form['phone_number']
+        insurance_number = request.form['insurance-number']
+        phone_number = request.form['phone-number']
 
         # Demographics
         gender = request.form['gender']
         race = request.form['race']
         age = request.form['age']
-        family_status = request.form['family_status'] # TODO: add them to Patient object.
+        family_status = request.form['family-status']
         occupation = request.form['occupation']
         height = request.form['height']
         weight = request.form['weight']
 
         # Vital Signs
-        core_temperature = request.form['core_temperature']
-        heart_rate = request.form['heart_rate']
-        respiratory_rate = request.form['respiratory_rate']
-        blood_oxygen = request.form['blood_oxygen']
-        blood_pressure = request.form['blood_pressure']
+        core_temperature = request.form['core-temp']
+        heart_rate = request.form['heart-rate']
+        respiratory_rate = request.form['respiratory-rate']
+        blood_oxygen = request.form['blood-oxygen']
+        blood_pressure = request.form['blood-pressure']
 
         # Medical History
-        disease_history = request.form['disease_history']
-        family_history = request.form['family_history']
-        immunization_status = request.form.getlist('immunization_status')
-        food_allergies = request.form['food_allergies']
-        medication_allergies = request.form['medication_allergies']
-        other_allergies = request.form['other_allergies']
-        smoking_history = request.form['smoking_history']
-        alcoholic = request.form['alcoholic']
-        current_med_name = request.form['current_med_name']
+        disease_history = request.form['disease-history']
+        family_history = request.form['family-history']
+        immunization_status = request.form.getlist('immunization-status')
+        food_allergies = request.form['food-allergy']
+        medication_allergies = request.form['medication-allergy']
+        other_allergies = request.form['other-allergies']
+        smoking_history = request.form['smoking-history']
+        alcoholic = request.form['alcohol-history']
+        current_med_name = request.form['current_med_name'] # TODO: Edit on frontend needed.
         current_med_dosage = request.form['current_med_dosage']
         current_med_frequency = request.form['current_med_frequency']
-        past_medication = request.form['past_medication']
-        wbc = request.form['wbc']
+        past_medication = request.form['past-medication']
+        wbc = request.form['wbc'] # TODO: Edit on frontend needed.
         rbc = request.form['rbc']
         hco3 = request.form['hco3']
         glucose = request.form['glucose']
 
         # History of Present Illness
-        chief_complaint = request.form['chief_complaint']
-        soap_notes = request.form['soap_notes']
+        chief_complaint = request.form['chief-complaint']
+        soap_notes = request.form['soap-notes']
         ros = request.form['ros']
 
         concatenated_immunization_status = ','.join(immunization_status)
@@ -302,6 +302,115 @@ def view():
         return redirect(url_for('login'))
     
     return render_template("patient-list.html", values=Patient.query.filter_by(responsible_doctor=session.get('email')).all())
+
+
+@app.route('/dashboard/delete-patient', methods=['POST'])
+def delete_patient():
+    if not session.get('email'):
+        flash("In order to perform this operation please login.")
+        return redirect(url_for('login'))
+
+    patient_email = request.form.get('patient_email')
+    patient = Patient.query.filter_by(email=patient_email).first()
+
+    try:
+        db.session.delete(patient)
+        db.session.commit()
+        flash("Patient record was successfully deleted.")
+        return redirect(url_for("dashboard"))
+    except Exception as e:
+        db.session.rollback()
+        flash(f"An error occurred while deleting the record: {str(e)}")
+        return redirect(url_for("dashboard"))
+
+
+@app.route('/dashboard/update-patient', methods=["GET", "POST"])
+def update_patient():
+    if not session.get('email'):
+        flash("In order to edit patient and access your dashboard you need to login.")
+        return redirect(url_for('login'))
+
+    email = request.form.get('patient_email')
+    patient = Patient.query.filter_by(email=email).first()
+
+    patient_id = patient.patient_id
+    patient_med_info = PatientMedInfo.query.filter_by(patient_med_info_id=patient_id).first() # Reference to patient_id (foreign key)
+
+    if request.method == "POST":
+        # Direct Information
+        patient.responsible_doctor = request.form['doctor-email'] if 'doctor-email' in request.form else patient.responsible_doctor
+        patient.admission_date = request.form['admission-date'] if 'admission-date' in request.form else patient.admission_date
+        patient.first_name = request.form['first-name'] if 'first-name' in request.form else patient.first_name
+        patient.last_name = request.form['last-name'] if 'last-name' in request.form else patient.last_name
+        patient.email = request.form['email'] if 'email' in request.form else patient.email
+        patient.address = request.form['address'] if 'address' in request.form else patient.address
+        patient.insurance_number = request.form['insurance-number'] if 'insurance-number' in request.form else patient.insurance_number
+        patient.phone_number = request.form['phone-number'] if 'phone-number' in request.form else patient.phone_number
+
+        # Demographics
+        patient.gender = request.form['gender'] if 'gender' in request.form else patient.gender
+        patient.race = request.form['race'] if 'race' in request.form else patient.race
+        patient.age = request.form['age'] if 'age' in request.form else patient.age
+        patient.family_status = request.form['family-status'] if 'family-status' in request.form else patient.family_status
+        patient.occupation = request.form['occupation'] if 'occupation' in request.form else patient.occupation
+        patient_med_info.height = request.form['height'] if 'height' in request.form else patient_med_info.height
+        patient_med_info.weight = request.form['weight'] if 'weight' in request.form else patient_med_info.weight
+
+        # Vital Signs
+        patient_med_info.core_temperature = request.form['core-temp'] if 'core-temp' in request.form else patient_med_info.core_temperature
+        patient_med_info.heart_rate = request.form['heart-rate'] if 'heart-rate' in request.form else patient_med_info.heart_rate
+        patient_med_info.respiratory_rate = request.form['respiratory-rate'] if 'respiratory-rate' in request.form else patient_med_info.respiratory_rate
+        patient_med_info.blood_oxygen = request.form['blood-oxygen'] if 'blood-oxygen' in request.form else patient_med_info.blood_oxygen
+        patient_med_info.blood_pressure = request.form['blood-pressure'] if 'blood-pressure' in request.form else patient_med_info.blood_pressure
+
+        # Medical History
+        patient_med_info.disease_history = request.form['disease-history'] if 'disease-history' in request.form else patient_med_info.disease_history
+        patient_med_info.family_history = request.form['family-history'] if 'family-history' in request.form else patient_med_info.family_history
+        patient_med_info.immunization_status = request.form.getlist('immunization-status') if 'immunization-status' in request.form else patient_med_info.immunization_status
+        patient_med_info.food_allergies = request.form['food-allergy'] if 'food-allergy' in request.form else patient_med_info.food_allergies
+        patient_med_info.medication_allergies = request.form['medication-allergy'] if 'medication-allergy' in request.form else patient_med_info.medication_allergies
+        patient_med_info.other_allergies = request.form['other-allergies'] if 'other-allergies' in request.form else patient_med_info.other_allergies
+        patient_med_info.smoking_history = request.form['smoking-history'] if 'smoking-history' in request.form else patient_med_info.smoking_history
+        patient_med_info.alcoholic = request.form['alcohol-history'] if 'alcohol-history' in request.form else patient_med_info.alcoholic
+        patient_med_info.current_med_name = request.form['current_med_name'] if 'current_med_name' in request.form else patient_med_info.current_med_name
+        patient_med_info.current_med_dosage = request.form['current_med_dosage'] if 'current_med_dosage' in request.form else patient_med_info.current_med_dosage
+        patient_med_info.current_med_frequency = request.form['current_med_frequency'] if 'current_med_frequency' in request.form else patient_med_info.current_med_frequency
+        patient_med_info.past_medication = request.form['past-medication'] if 'past-medication' in request.form else patient_med_info.past_medication
+        patient_med_info.wbc = request.form['wbc'] if 'wbc' in request.form else patient_med_info.wbc
+        patient_med_info.rbc = request.form['rbc'] if 'rbc' in request.form else patient_med_info.rbc
+        patient_med_info.hco3 = request.form['hco3'] if 'hco3' in request.form else patient_med_info.hco3
+        patient_med_info.glucose = request.form['glucose'] if 'glucose' in request.form else patient_med_info.glucose
+
+        # History of Present Illness
+        patient_med_info.chief_complaint = request.form['chief-complaint'] if 'chief-complaint' in request.form else patient_med_info.chief_complaint
+        patient_med_info.soap_notes = request.form['soap-notes'] if 'soap-notes' in request.form else patient_med_info.soap_notes
+        patient_med_info.ros = request.form['ros'] if 'ros' in request.form else patient_med_info.ros
+
+        try:
+            db.session.commit()
+            flash("Patient information was successfully edited.")
+            return redirect(url_for("dashboard"))
+        except Exception as e:
+            db.session.rollback()
+            flash(f"An error occurred while updating the information: {str(e)}")
+            return redirect(url_for("dashboard"))
+
+    # TODO: New html page or the positional args can be represented in add-patient
+    return render_template("add_patient.html", doctor_email=patient.responsible_doctor, admission_date=patient.admission_date,
+                           firstname=patient.first_name, lastname=patient.last_name, patient_email=patient.email,
+                           address=patient.address,insurance_number=patient.insurance_number, phone_number=patient.phone_number,
+                           gender=patient.gender, race=patient.race, age=patient.age, family_status=patient.family_status, occupation=patient.occupation,
+                           height=patient_med_info.height, weight=patient_med_info.weight, core_temp=patient_med_info.core_temperature,
+                           heart_rate=patient_med_info.heart_rate, respiratory_rate=patient_med_info.respiratory_rate, blood_oxygen=patient_med_info.blood_oxygen,
+                           blood_pressure=patient_med_info.blood_pressure, disease_history=patient_med_info.disease_history,
+                           family_history=patient_med_info.family_history, immunization_status=patient_med_info.immunization_status,
+                           food_allergy=patient_med_info.food_allergies, medication_allergy=patient_med_info.medication_allergies,
+                           other_allergies=patient_med_info.other_allergies, smoking_history=patient_med_info.smoking_history,
+                           alcohol_history=patient_med_info.alcoholic, current_med_name=patient_med_info.current_med_name,
+                           current_med_dosage=patient_med_info.current_med_dosage, current_med_frequency=patient_med_info.current_med_frequency,
+                           past_medication=patient_med_info.past_medication, wbc=patient_med_info.wbc, rbc=patient_med_info.rbc,
+                           hco3=patient_med_info.hco3, glucose=patient_med_info.glucose, cc=patient_med_info.chief_complaint,
+                           soap=patient_med_info.soap_notes, ros=patient_med_info.ros)
 
 
 @app.route('/forget-password', methods=["GET", "POST"])
