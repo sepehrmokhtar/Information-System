@@ -254,14 +254,14 @@ def add_patient():
         immunization_status = request.form.getlist('immunization-status')
         food_allergies = request.form['food-allergy']
         medication_allergies = request.form['medication-allergy']
-        other_allergies = request.form['other-allergies']
+        other_allergies = request.form['other-allergy']
         smoking_history = request.form['smoking-history']
         alcoholic = request.form['alcohol-history']
-        current_med_name = request.form['current_med_name'] # TODO: Edit on frontend needed.
+        current_med_name = request.form['current_med_name']
         current_med_dosage = request.form['current_med_dosage']
         current_med_frequency = request.form['current_med_frequency']
         past_medication = request.form['past-medication']
-        wbc = request.form['wbc'] # TODO: Edit on frontend needed.
+        wbc = request.form['wbc']
         rbc = request.form['rbc']
         hco3 = request.form['hco3']
         glucose = request.form['glucose']
@@ -369,7 +369,7 @@ def update_patient():
         patient_med_info.immunization_status = request.form.getlist('immunization-status') if 'immunization-status' in request.form else patient_med_info.immunization_status
         patient_med_info.food_allergies = request.form['food-allergy'] if 'food-allergy' in request.form else patient_med_info.food_allergies
         patient_med_info.medication_allergies = request.form['medication-allergy'] if 'medication-allergy' in request.form else patient_med_info.medication_allergies
-        patient_med_info.other_allergies = request.form['other-allergies'] if 'other-allergies' in request.form else patient_med_info.other_allergies
+        patient_med_info.other_allergies = request.form['other-allergy'] if 'other-allergy' in request.form else patient_med_info.other_allergies
         patient_med_info.smoking_history = request.form['smoking-history'] if 'smoking-history' in request.form else patient_med_info.smoking_history
         patient_med_info.alcoholic = request.form['alcohol-history'] if 'alcohol-history' in request.form else patient_med_info.alcoholic
         patient_med_info.current_med_name = request.form['current_med_name'] if 'current_med_name' in request.form else patient_med_info.current_med_name
