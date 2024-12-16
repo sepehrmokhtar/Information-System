@@ -21,158 +21,238 @@
             <h2>Add Patient</h2>
             <form>
                 <!-- Doctor Details -->
-                <fieldset>
-                    <legend>Doctor Details</legend>
-                    <label for="doctor-email">Doctor E-mail:</label>
-                    <input type="email" id="doctor-email" name="doctor-email">
-                    
-                    <label for="admission-date">Admission Date:</label>
-                    <input type="date" id="admission-date" name="admission-date">
-                </fieldset>
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Comprehensive Form</title>
+                    <style>
+                        /* General Styling */
+                        .container {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 20px;
+                            width: 100%;
+                            max-width: 1200px;
+                            margin: auto;
+                        }
+                
+                        fieldset {
+                            border: 1px solid #ccc;
+                            border-radius: 8px;
+                            padding: 20px;
+                            flex: 0 1 calc(48% - 20px);
+                            box-sizing: border-box;
+                        }
+                
+                        legend {
+                            font-weight: bold;
+                        }
+                
+                        label {
+                            display: block;
+                            margin-bottom: 10px;
+                            font-size: 14px;
+                        }
+                
+                        input, select, textarea {
+                            width: 100%;
+                            padding: 8px;
+                            margin-bottom: 10px;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                            font-size: 14px;
+                            box-sizing: border-box;
+                        }
+                        
+                
+                        textarea {
+                            resize: none;
+                        }
+                
+                        .checkbox-group {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 5px;
+                        }
+                
+                        /* Responsive Design */
+                        @media (max-width: 768px) {
+                            fieldset {
+                                flex: 0 1 100%;
+                            }
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <!-- Doctor Email -->
+                        <fieldset>
+                            <legend>Doctor Details</legend>
+                            <label for="doctor-email">Doctor E-mail:</label>
+                            <textarea type="email" id="doctor-email" name="doctor-email"></textarea>
+                
+                            <label for="admission-date">Admission Date:</label>
+                            <input type="date" id="admission-date" name="admission-date">
+                        </fieldset>
+                
+                        <!-- Patient Basic Information -->
+                        <fieldset>
+                            <legend>Patient Basic Information</legend>
+                            <label for="first-name">First Name:</label>
+                            <input type="text" id="first-name" name="first-name">
+                
+                            <label for="last-name">Last Name:</label>
+                            <input type="text" id="last-name" name="last-name">
+                
+                            <label for="insurance-number">Insurance Number:</label>
+                            <input type="text" id="insurance-number" name="insurance-number">
+                
+                            <label for="phone-number">Phone Number:</label>
+                            <input type="tel" id="phone-number" name="phone-number">
 
-                <!-- Patient Basic Information -->
-                <fieldset>
-                    <legend>Patient Information</legend>
-                    <label for="first-name">First Name:</label>
-                    <input type="text" id="first-name" name="first-name">
+                            <label for="address">Address:</label>
+                            <textarea id="address" name="address" rows="3"></textarea>
 
-                    <label for="last-name">Last Name:</label>
-                    <input type="text" id="last-name" name="last-name">
+                            <label for="email">E-mail:</label>
+                            <textarea type="email" id="email" name="email"></textarea>
+                        </fieldset>
+                
+                        <!-- Demographic Information -->
+                        <fieldset>
+                            <legend>Demographic Information</legend>
+                            <label for="gender">Gender:</label>
+                            <select id="gender" name="gender">
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                            <label for="age">Age:</label>
+                            <input type="number" id="age" name="age">
+                
+                            <label for="race">Race:</label>
+                            <input type="text" id="race" name="race">
 
-                    <label for="email">E-mail:</label>
-                    <input type="email" id="email" name="email">
+                
+                            <label for="family-status">Family Status:</label>
+                            <input type="text" id="family-status" name="family-status">
+                
+                            <label for="occupation">Occupation:</label>
+                            <input type="text" id="occupation" name="occupation">
+                
+                            <label for="height">Height:</label>
+                            <input type="text" id="height" name="height">
+                
+                            <label for="weight">Weight:</label>
+                            <input type="text" id="weight" name="weight">
+                        </fieldset>
+                
+                        <!-- Vital Signs -->
+                        <fieldset>
+                            <legend>Vital Signs</legend>
+                            <label for="core-temp">Core Temperature:</label>
+                            <input type="text" id="core-temp" name="core-temp">
+                
+                            <label for="heart-rate">Heart Rate:</label>
+                            <input type="text" id="heart-rate" name="heart-rate">
+                
+                            <label for="respiratory-rate">Respiratory Rate:</label>
+                            <input type="text" id="respiratory-rate" name="respiratory-rate">
+                
+                            <label for="blood-oxygen">Blood Oxygen:</label>
+                            <input type="text" id="blood-oxygen" name="blood-oxygen">
+                
+                            <label for="blood-pressure">Blood Pressure:</label>
+                            <input type="text" id="blood-pressure" name="blood-pressure">
+                        </fieldset>
+                
+                        <!-- Immunization Status -->
+                        <fieldset>
+                            <legend>Immunization Status</legend>
+                            <div class="checkbox-group">
+                                <label><input type="checkbox" name="immunization-status" value="Hepatitis A"> Hepatitis A</label>
+                                <label><input type="checkbox" name="immunization-status" value="Hepatitis B"> Hepatitis B</label>
+                                <label><input type="checkbox" name="immunization-status" value="HPV"> HPV</label>
+                                <label><input type="checkbox" name="immunization-status" value="Flu"> Flu</label>
+                                <label><input type="checkbox" name="immunization-status" value="Yellow Fever"> Yellow Fever</label>
+                            </div>
+                        </fieldset>
+                
+                        <!-- Medical History -->
+                        <fieldset>
+                            <legend>Medical History</legend>
+                            <label for="disease-history">Disease History:</label>
+                            <textarea id="disease-history" name="disease-history" rows="4"></textarea>
+                
+                            <label for="family-history">Family History:</label>
+                            <textarea id="family-history" name="family-history" rows="3"></textarea>
+                        </fieldset>
+                
+                        <!-- Laboratory Test Results -->
+                        <fieldset>
+                            <legend>Laboratory Test Results</legend>
+                            <label for="WBH">WBC K/μl:</label>
+                            <input type="text" id="wbc" name="wbc">
+                            <label for="rbc">RBC million/mm3:</label>
+                            <input type="text" id="rbc" name="rbc">
+                            <label for="hco3">HCO3 mEq/L:</label>
+                            <input  type="text"id="hco3" name="hco3">
+                            <label for="glucos">Glucos mg/dL:</label>
+                            <input type="text" id="glucos" name="glucos">
+                        </fieldset>
+                
+                        <!-- Allergies and Habits -->
+                        <fieldset>
+                            <legend>Allergies and Habits</legend>
+                            <label for="food-allergy">Food Allergy:</label>
+                            <textarea id="food-allergy" name="food-allergy" rows="3"></textarea>
+                            <label for="medication-allergy">Medication Allergy:</label>
+                            <textarea id="medication-allergy" name="medication-allergy" rows="3"></textarea>
+                            <label for="other-allergy">Other Allergy:</label>
+                            <textarea id="other-allergy" name="other-allergy" rows="3"></textarea>
+                
+                            <label for="smoking-history">Smoking History:</label>
+                            <select id="smoking-history" name="smoking-history">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                            <label for="alchol-history">Alcohol History:</label>
+                            <select id="alchol-history" name="alchol-history">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </fieldset>
+                
+                        <!-- Review of Systems (ROS) -->
+                        <fieldset>
+                            <legend>Review of Systems (ROS)</legend>
+                            <textarea id="general" name="general" rows="3"></textarea>
+                        </fieldset>
 
-                    <label for="address">Address:</label>
-                    <textarea id="address" name="address" rows="3"></textarea>
+                        <!-- medication history -->
 
-                    <label for="insurance-number">Insurance Number:</label>
-                    <input type="text" id="insurance-number" name="insurance-number">
+                        <fieldset>
+                            <legend>Medication History</legend>
+                            <label for="current_med_name">Current Medication:</label>
+                            <textarea id="current_med_name" name="current_med_name" rows="3"></textarea>
+                            <label for="current_med_frequnecy">Medication Frequency:</label>
+                            <textarea id="current_med_frequnecy" name="current_med_frequnecy" rows="3"></textarea>
+                            <label for="current_med_dosage">Medication Dosage:</label>
+                            <textarea id="current_med_dosage" name="current_med_dosage" rows="3"></textarea>
+                            <label for="past-medication">Past Medication:</label>
+                            <textarea id="past-medication" name="past-medication" rows="3"></textarea>
+                        </fieldset>
+                        <!-- history of present illness -->
+                        <fieldset>
+                            <legend>History Of Present Illness</legend>
+                            <label for="cheif-complaint">Chief Complaint</label>
+                            <textarea id="cheif-complaint" name="cheif-complaint" rows="3"></textarea>
+                            <label for="soap-notes">SOAP Notes:</label>
+                            <textarea id="soap-notes" name="soap-notes" rows="3"></textarea>
+                        </fieldset>
 
-                    <label for="phone-number">Phone Number:</label>
-                    <input type="tel" id="phone-number" name="phone-number">
-                </fieldset>
-
-                <!-- Demographic Information -->
-                <fieldset>
-                    <legend>Demographic Information</legend>
-                    <label for="gender">Gender:</label>
-                    <select id="gender" name="gender">
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="other">Other</option>
-                    </select>
-
-                    <label for="race">Race:</label>
-                    <input type="text" id="race" name="race">
-
-                    <label for="age">Age:</label>
-                    <input type="number" id="age" name="age">
-
-                    <label for="family-status">Family Status:</label>
-                    <input type="text" id="family-status" name="family-status">
-
-                    <label for="occupation">Occupation:</label>
-                    <input type="text" id="occupation" name="occupation">
-
-                    <label for="height">Height:</label>
-                    <input type="text" id="height" name="height">
-
-                    <label for="weight">Weight:</label>
-                    <input type="text" id="weight" name="weight">
-                </fieldset>
-
-                <!-- Vital Signs -->
-                <fieldset>
-                    <legend>Vital Signs</legend>
-                    <label for="core-temp">Core Temperature:</label>
-                    <input type="text" id="core-temp" name="core-temp">
-
-                    <label for="heart-rate">Heart Rate:</label>
-                    <input type="text" id="heart-rate" name="heart-rate">
-
-                    <label for="respiratory-rate">Respiratory Rate:</label>
-                    <input type="text" id="respiratory-rate" name="respiratory-rate">
-
-                    <label for="blood-oxygen">Blood Oxygen:</label>
-                    <input type="text" id="blood-oxygen" name="blood-oxygen">
-
-                    <label for="blood-pressure">Blood Pressure:</label>
-                    <input type="text" id="blood-pressure" name="blood-pressure">
-                </fieldset>
-
-                <!-- Medical History -->
-                <fieldset>
-                    <legend>Medical History</legend>
-                    <label for="disease-history">Disease History:</label>
-                    <textarea id="disease-history" name="disease-history" rows="4"></textarea>
-
-                    <label for="immunization-status">Immunization Status:</label>
-                    <textarea id="immunization-status" name="immunization-status" rows="4">HFB-MMB_HEPATITIS A-HEPATITIS B-FLU-HPV_YELLOW FEVER</textarea>
-
-                    <label for="family-history">Family History:</label>
-                    <textarea id="family-history" name="family-history" rows="3"></textarea>
-                </fieldset>
-
-                <!-- Allergies and Habits -->
-                <fieldset>
-                    <legend>Allergies and Habits</legend>
-                    <label for="food-allergy">Food Allergy:</label>
-                    <textarea id="food-allergy" name="food-allergy" rows="3"></textarea>
-
-                    <label for="medication-allergy">Medication Allergy:</label>
-                    <textarea id="medication-allergy" name="medication-allergy" rows="3"></textarea>
-
-                    <label for="other-allergies">Other Allergies:</label>
-                    <textarea id="other-allergies" name="other-allergies" rows="3"></textarea>
-
-                    <label for="smoking-history">Smoking History:</label>
-                    <select id="smoking-history" name="smoking-history">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                        <option value="occasionally">Occasionally</option>
-                    </select>
-
-                    <label for="alcohol-history">Alcohol History:</label>
-                    <select id="alcohol-history" name="alcohol-history">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
-                        <option value="occasionally">Occasionally</option>
-                    </select>
-                </fieldset>
-
-                <!-- Current and Past Medication -->
-                <fieldset>
-                    <legend>Medication</legend>
-                    <label for="current-medication">Current Medication:</label>
-                    <textarea id="current-medication" name="current-medication" rows="3" placeholder="Name: Dosage: Frequency:"></textarea>
-
-                    <label for="past-medication">Past Medication:</label>
-                    <textarea id="past-medication" name="past-medication" rows="3"></textarea>
-                </fieldset>
-
-                <!-- Laboratory Test Results -->
-                <fieldset>
-                    <legend>Laboratory Test Results</legend>
-                    <label for="lab-results">Results:</label>
-                    <textarea id="lab-results" name="lab-results" rows="4" placeholder="WBG: - RBC: - HCO3: - Glucose:"></textarea>
-                </fieldset>
-
-                <!-- Present Illness -->
-                <fieldset>
-                    <legend>History of Present Illness</legend>
-                    <label for="chief-complaint">Chief Complaint:</label>
-                    <textarea id="chief-complaint" name="chief-complaint" rows="3"></textarea>
-
-                    <label for="soap-notes">SOAP Notes:</label>
-                    <textarea id="soap-notes" name="soap-notes" rows="4"></textarea>
-
-                    <label for="ros">ROS:</label>
-                    <textarea id="ros" name="ros" rows="4"></textarea>
-                </fieldset>
-
-                <button type="submit">Submit</button>
-            </form>
-        </section>
-    </div>
-</body>
-</html>
+                
+                    </div>
+                </body>
+                </html>
