@@ -1,4 +1,5 @@
 # MySQL Datatbase created in database.py
+import json
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import timedelta
@@ -11,6 +12,7 @@ app.secret_key = "12345678910" # In order to safely store session cookies.
 app.permanent_session_lifetime = timedelta(days=1)
 
 db = SQLAlchemy(app)
+
 
 class Doctor(db.Model):
 
@@ -271,13 +273,13 @@ def add_patient():
         soap_notes = request.form['soap-notes']
         ros = request.form['ros']
 
-        concatenated_immunization_status = ','.join(immunization_status)
+        json_stored_immunization_status = json.dumps(immunization_status)
 
         patient = Patient(firstname, lastname, patient_email, address, gender, age, race, insurance_number, phone_number,
                           admission_date, doctor_email, family_status, occupation)
 
         patient_med_info = PatientMedInfo(height, weight, core_temperature, heart_rate, respiratory_rate, blood_oxygen,
-                                          blood_pressure, disease_history, family_history, concatenated_immunization_status,
+                                          blood_pressure, disease_history, family_history, json_stored_immunization_status,
                                           food_allergies, medication_allergies, other_allergies, smoking_history, alcoholic,
                                           current_med_name, current_med_dosage, current_med_frequency, past_medication, wbc,
                                           rbc, hco3, glucose, chief_complaint, soap_notes, ros)
@@ -301,7 +303,7 @@ def view():
         flash("In order to see patients list and access your dashboard you need to login.")
         return redirect(url_for('login'))
     
-    return render_template("patient-list.html", values=Patient.query.filter_by(responsible_doctor=session.get('email')).all())
+    return render_template("patient-list.html", patients=Patient.query.filter_by(responsible_doctor=session.get('email')).all())
 
 
 @app.route('/dashboard/delete-patient', methods=['POST'])
@@ -395,15 +397,16 @@ def update_patient():
             flash(f"An error occurred while updating the information: {str(e)}")
             return redirect(url_for("dashboard"))
 
-    # TODO: New html page or the positional args can be represented in add-patient
+    stored_immunization_status = json.loads(patient_med_info.immunization_status) # Deserialized the stored immunization_status for use in the template.
+
     return render_template("add_patient.html", doctor_email=patient.responsible_doctor, admission_date=patient.admission_date,
                            firstname=patient.first_name, lastname=patient.last_name, patient_email=patient.email,
-                           address=patient.address,insurance_number=patient.insurance_number, phone_number=patient.phone_number,
+                           address=patient.address, insurance_number=patient.insurance_number, phone_number=patient.phone_number,
                            gender=patient.gender, race=patient.race, age=patient.age, family_status=patient.family_status, occupation=patient.occupation,
                            height=patient_med_info.height, weight=patient_med_info.weight, core_temp=patient_med_info.core_temperature,
                            heart_rate=patient_med_info.heart_rate, respiratory_rate=patient_med_info.respiratory_rate, blood_oxygen=patient_med_info.blood_oxygen,
                            blood_pressure=patient_med_info.blood_pressure, disease_history=patient_med_info.disease_history,
-                           family_history=patient_med_info.family_history, immunization_status=patient_med_info.immunization_status,
+                           family_history=patient_med_info.family_history, immunization_status=stored_immunization_status,
                            food_allergy=patient_med_info.food_allergies, medication_allergy=patient_med_info.medication_allergies,
                            other_allergies=patient_med_info.other_allergies, smoking_history=patient_med_info.smoking_history,
                            alcohol_history=patient_med_info.alcoholic, current_med_name=patient_med_info.current_med_name,
