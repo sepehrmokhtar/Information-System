@@ -315,8 +315,12 @@ def delete_patient():
     patient_email = request.form.get('patient_email')
     patient = Patient.query.filter_by(email=patient_email).first()
 
+    patient_id = patient.patient_id
+    patient_med_info = PatientMedInfo.query.filter_by(patient_med_info_id=patient_id).first() # Reference to patient_id (foreign key)
+
     try:
         db.session.delete(patient)
+        db.session.delete(patient_med_info)
         db.session.commit()
         flash("Patient record was successfully deleted.")
         return redirect(url_for("dashboard"))
@@ -336,7 +340,7 @@ def update_patient():
     patient = Patient.query.filter_by(email=email).first()
 
     patient_id = patient.patient_id
-    patient_med_info = PatientMedInfo.query.filter_by(patient_med_info_id=patient_id).first() # Reference to patient_id (foreign key)
+    patient_med_info = PatientMedInfo.query.filter_by(patient_med_info_id=patient_id).first()
 
     if request.method == "POST":
         # Direct Information
