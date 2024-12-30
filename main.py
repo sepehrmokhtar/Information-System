@@ -292,7 +292,7 @@ def add_patient():
         except Exception as e:
             db.session.rollback()
             flash(f"An error occurred while adding information: {str(e)}")
-            return redirect(url_for("dashboard"))
+            return redirect(url_for("dashboard", lastname=session.get("last_name")))
 
     return render_template("add_patient.html")
 
@@ -391,7 +391,7 @@ def update_patient():
         try:
             db.session.commit()
             flash("Patient information was successfully edited.")
-            return redirect(url_for("dashboard"))
+            return redirect(url_for("dashboard", lastname=session.get("last_name")))
         except Exception as e:
             db.session.rollback()
             flash(f"An error occurred while updating the information: {str(e)}")
