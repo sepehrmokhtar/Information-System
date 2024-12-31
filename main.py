@@ -1,7 +1,10 @@
-# MySQL Datatbase created in database.py
+# MySQL database created in database.py
 import json
+import random
+import string
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash # Used to hash passwords stored in database.
 
@@ -10,6 +13,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://sql7746745:qVMtw78yWQ@s
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "12345678910" # In order to safely store session cookies.
 app.permanent_session_lifetime = timedelta(days=1)
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USERNAME'] = 'signaleegapp@gmail.com'
+app.config['MAIL_PASSWORD'] = '12345678910*@'
+mail = Mail(app)
 
 db = SQLAlchemy(app)
 
@@ -323,11 +333,11 @@ def delete_patient():
         db.session.delete(patient_med_info)
         db.session.commit()
         flash("Patient record was successfully deleted.")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("view"))
     except Exception as e:
         db.session.rollback()
         flash(f"An error occurred while deleting the record: {str(e)}")
-        return redirect(url_for("dashboard"))
+        return redirect(url_for("view"))
 
 
 @app.route('/dashboard/update-patient', methods=["GET", "POST"])
@@ -425,8 +435,9 @@ def forget_password():
     if request.method == 'POST':
         email = request.form['email'].strip().lower()
         new_password = request.form['new_password']
+        token = request.form['token']
         found_doctor = Doctor.query.filter_by(email=email).first()
-        if found_doctor:
+        if found_doctor and token == session.get('token'):
             new_hashed_password = generate_password_hash(new_password)
             found_doctor.password = new_hashed_password
             db.session.commit()
@@ -435,6 +446,33 @@ def forget_password():
         else:
             flash("Please make sure that the doctor is registered.")
     return render_template("forget-password.html")
+
+
+@app.route('/gen-token', methods=["POST"])
+def gen_token():
+    email = request.form['email'].strip().lower()
+    found_doctor = Doctor.query.filter_by(email=email).first()
+    if not found_doctor:
+        flash("Doctor not found.")
+        return redirect(url_for('forget_password'))
+
+    token = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+    session['token'] = token  # Generating a random token and save it in session
+
+    try:
+        msg = Message(
+            "Your One-Time Password Reset Token",
+            sender="signaleegapp@gmail.com",
+            recipients=[email]
+        )
+        msg.body = f"Your one-time password reset token is: {token}"
+        mail.send(msg) # Token is sent via email
+        flash("Token was sent to your email.")
+    except Exception as e:
+        print(e)
+        flash("Failed to send email. Please try again.")
+
+    return redirect(url_for('forget_password'))
 
 
 @app.route('/dashboard/profile', methods=["GET", "POST"])
