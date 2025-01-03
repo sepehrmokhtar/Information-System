@@ -193,7 +193,7 @@ def register():
 def login():
     if session.get('email'):
         flash('Already logged in!')
-        return redirect(url_for('dashboard', last_name=session.get('last_name')))
+        return redirect(url_for('dashboard'))
 
     if request.method == "POST":
         email = request.form['email'].strip().lower()  # Normalize the input email
@@ -202,9 +202,8 @@ def login():
         if found_doctor and check_password_hash(found_doctor.password, password):
             session.permanent = True
             session['email'] = email
-            session['last_name'] = found_doctor.last_name
             flash("Login successful!")
-            return redirect(url_for("dashboard", last_name=found_doctor.last_name))
+            return redirect(url_for("dashboard"))
         else:
             flash("Login failed. Please check your credentials or make sure you are registered.")
 
@@ -218,13 +217,13 @@ def logout():
     return redirect(url_for("home"))
 
 
-@app.route('/dashboard/<last_name>')
-def dashboard(last_name):
+@app.route('/dashboard')
+def dashboard():
     if not session.get('email'):
         flash("In order to access the dashboard you need to login.")
         return redirect(url_for('login'))
 
-    return render_template("dashboard.html", last_name=last_name)
+    return render_template("dashboard.html")
 
 
 @app.route('/dashboard/add-patient', methods=["GET", "POST"])
@@ -302,7 +301,7 @@ def add_patient():
         except Exception as e:
             db.session.rollback()
             flash(f"An error occurred while adding information: {str(e)}")
-            return redirect(url_for("dashboard", lastname=session.get("last_name")))
+            return redirect(url_for("dashboard"))
 
     return render_template("add_patient.html")
 
@@ -405,7 +404,7 @@ def update_patient():
         try:
             db.session.commit()
             flash("Patient information was successfully edited.")
-            return redirect(url_for("dashboard", lastname=session.get("last_name")))
+            return redirect(url_for("dashboard"))
         except Exception as e:
             db.session.rollback()
             flash(f"An error occurred while updating the information: {str(e)}")
