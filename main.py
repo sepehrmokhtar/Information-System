@@ -449,7 +449,7 @@ def forget_password():
 
 @app.route('/gen-token', methods=["POST"])
 def gen_token():
-    email = request.form['email'].strip().lower()
+    email = request.form['email2'].strip().lower()
     found_doctor = Doctor.query.filter_by(email=email).first()
     if not found_doctor:
         flash("Doctor not found.")

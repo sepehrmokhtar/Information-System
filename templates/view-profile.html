@@ -182,36 +182,31 @@
             <li class="nav-item"><a class="nav-link" onclicj="window.location.href='view-profile.html'">View Profile</a></li>
         </ul>
     </div>
-    
-    <div class="main-content">  
-        <h1>Welcome, Dr. {{ last_name }}!</h1>      
-        <table class="patient-table">
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Specialization</th>
-                    <th>Email</th>
-                    <th>Password</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for doctor in doctors %}
-                <tr>
-                    <td>{{ doctor.doctor_firstname }}</td>
-                    <td>{{ doctor.doctor.lastname }}</td>
-                    <td>{{ doctor.specialization }}</td>
-                    <td>{{ doctor.email }}</td>
-                    <td>{{ doctor.password }}</td>
-                    <td>
-                        <button class="action-button" onclick="location.href='/patient/edit/{{ patient.patient_id }}'">Edit</button>
-                        <button class="action-button" onclick="location.href='/patient/delete/{{ patient.patient_id }}'">Delete</button>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
+
+    <div class="main-content">
+        <div class="content-wrapper">
+            <h1>Doctor Profile</h1>
+            <form action="#" method="post">
+                <label for="firstName">First Name:</label><br>
+                <input type="text" id="firstName" name="firstName" autocomplete="given-name" value="{{ firstname }}" required><br><br>
+
+                <label for="lastName">Last Name:</label><br>
+                <input type="text" id="lastName" name="lastName" autocomplete="family-name" value="{{ lastname }}" required><br><br>
+
+                <label for="specialization">Specialization:</label><br>
+                <input type="text" id="specialization" name="specialization" value="{{ specialization }}" required><br><br>
+
+                <label for="phone_number">Phone Number:</label><br>
+                <input type="text" id="phone_number" name="phone_number" value="{{ phone_number }}" required><br><br>
+
+                <label for="organization">Organization:</label><br>
+                <input type="text" id="organization" name="organization" value="{{ organization }}" required><br><br>
+
+                <label for="address">Address:</label><br>
+                <input type="text" id="address" name="address" value="{{ address }}" required><br><br>
+
+                <button type="submit">update</button>
+            </form>
+        </div>
 </body>
 </html>
