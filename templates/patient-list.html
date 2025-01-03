@@ -218,14 +218,15 @@
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for msg in messages %}
-                   {{ msg }}
+                {{ msg }}
             {% endfor %}
         {% endif %}
     {% endwith %}
     {% for item in values %}
-       <p> Name : {{ item.first_name }} {{ item.last_name }} , Email : {{ item.email }} , Insurance Number : {{ item.insurance_number }} , Admission Date : {{ item.admission_date }}</p>
+        <p> Name : {{ item.first_name }} {{ item.last_name }} , Email : {{ item.email }} , Insurance Number : {{ item.insurance_number }} , Admission Date : {{ item.admission_date }}</p>
     {% endfor %}
     <div class="alerts-container"></div>
+
     <!-- Sidebar Navigation Bar with Background Image --> 
     <nav class="sidebar">
         <div>
@@ -240,25 +241,27 @@
         </div>
     </nav> 
 
-    <div class="search-bar">
-        <input type="text" id="searchInput" placeholder="Search by name...">
-        <button id="searchButton">Search</button>
-    </div>
+    <div class="main-content">
+        <h2>Patient List</h2>
+        <ul>
+            {% for patient in patients %}
+                <li>
+                    {{ patient.first_name }} {{ patient.last_name }} {{ patient.email }}
+                    <!-- Delete Button -->
+                    <form action="{{ url_for('delete_patient') }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="patient_email" value="{{ patient.email }}">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete {{ patient.name }}?')">Delete</button>
+                    </form>
 
-    <!-- Patient Table -->
-    <div class="table-box">
-        <div class="container mt-5">
-            <div class="text-center">
-                <h1 class="display-5 mb-5"><strong>Patient List</strong></h1>
-            </div>
-            <div class="main row justify-content-center"></div>
-                <form action="" id="patient-form" class="row justify-content-center mb-4" autocomplete="off">
-                    <div class="col-8 mt-5" style="color: #f1f9ff">
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Insurance Number</th>
-                                <th>Actions</th>
-                            </tr>
+                    <!-- Update Button Inside a Form -->
+                    <form action="{{ url_for('update_patient') }}" method="POST" style="display:inline;">
+                        <input type="hidden" name="patient_email" value="{{ patient.email }}">
+                        <input type="hidden" name="patient_name" value="{{ patient.name }}">
+                        <input type="hidden" name="patient_email_current" value="{{ patient.email }}">
+                        <button type="submit">Update</button>
+                    </form>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
