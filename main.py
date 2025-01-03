@@ -95,7 +95,7 @@ class PatientMedInfo(db.Model):
     weight = db.Column(db.Float, nullable=False)
     heart_rate = db.Column('heart_rate', db.Integer, nullable=False)
     respiratory_rate = db.Column('respiratory_rate', db.Integer, nullable=False)
-    core_temperature = db.Column('temperature', db.Float, nullable=False)
+    core_temperature = db.Column('core_temperature', db.Float, nullable=False)
     blood_oxygen = db.Column('blood_oxygen', db.Integer, nullable=False)
     blood_pressure = db.Column('blood_pressure', db.Integer, nullable=False)
     disease_history = db.Column('disease_history', db.Text, nullable=True)
@@ -294,10 +294,14 @@ def add_patient():
                                           rbc, hco3, glucose, chief_complaint, soap_notes, ros)
         try:
             db.session.add(patient)
+            db.session.commit()
+
             db.session.add(patient_med_info)
             db.session.commit()
+
             flash("New patient was successfully added.")
             return redirect(url_for("dashboard"))
+
         except Exception as e:
             db.session.rollback()
             flash(f"An error occurred while adding information: {str(e)}")
