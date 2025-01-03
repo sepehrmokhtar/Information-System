@@ -60,7 +60,7 @@ CREATE TABLE PatientMedInfo (
     blood_pressure INT NOT NULL,
     disease_history TEXT,
     family_history TEXT,
-    immunization_stats TEXT,
+    immunization_status TEXT,
     food_allergies VARCHAR(200),
     medication_allergies VARCHAR(200),
     other_allergies VARCHAR(200),

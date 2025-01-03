@@ -247,7 +247,7 @@
             {% for patient in patients %}
                 <li>
                     <!-- Delete Button -->
-                    <form action="{{ url_for('delete_patient') }}" method="POST" style="display:inline;" readonly>
+                    <form action="{{ url_for('delete_patient') }}" method="POST" style="display:inline;">
                         <input type="text" name="patient_firstname" value="{{ patient.first_name }}" readonly>
                         <input type="text" name="patient_lastname" value="{{ patient.last_name }}" readonly>
                         <input type="text" name="patient_email" value="{{ patient.email }}" readonly>
@@ -258,7 +258,7 @@
                     <form action="{{ url_for('update_patient') }}" method="POST" style="display:inline;">
                         <input type="hidden" name="patient_firstname" value="{{ patient.first_name }}">
                         <input type="hidden" name="patient_lastname" value="{{ patient.last_name }}">
-                        <input type="hidden" name="patient_email " value="{{ patient.email }}">
+                        <input type="hidden" name="patient_email" value="{{ patient.email }}">
                         <button type="submit">Update</button>
                     </form>
                 </li>
