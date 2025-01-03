@@ -28,8 +28,11 @@
             background-color: #14967f; /* Teal for sidebar */
             padding: 20px;
             position: fixed;
+            top: 0; /* Ensures sidebar is at the top of the viewport */
+            left: 0; /* Ensures sidebar stays fixed to the left of the viewport */
             border-top-right-radius: 15px; /* Curved top-right corner */
             border-top-left-radius: 15px; /* Curved top-left corner */
+            z-index: 1000; /* Ensure sidebar stays above other content */
         }
 
         .navbar-brand {
@@ -64,41 +67,40 @@
 
         /* Main Content */
         .main-content {
-            margin-left: 270px; /* Adjusted for sidebar width */
+            margin-left: 250px; /* Adjusted for sidebar width */
             padding: 20px;
         }
 
         .search-bar {
-    position: fixed;
-    top: 60px; /* Increase this value to push the search bar down */
-    right: 20px;
-    display: flex;
-    gap: 10px;
-}
+            position: fixed;
+            top: 60px; /* Increase this value to push the search bar down */
+            right: 20px;
+            display: flex;
+            gap: 10px;
+        }
 
-.search-bar input[type="text"] {
-    width: 70%; /* Set search bar width */
-    padding: 8px; /* Padding for search bar */
-    border: 1px solid #ccc; /* Light gray border */
-    border-radius: 5px; /* Rounded corners */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-}
+        .search-bar input[type="text"] {
+            width: 70%; /* Set search bar width */
+            padding: 8px; /* Padding for search bar */
+            border: 1px solid #ccc; /* Light gray border */
+            border-radius: 5px; /* Rounded corners */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
 
-.search-bar button {
-    padding: 4px 15px; /* Padding for search button */
-    margin-left: 10px; /* Space between input and button */
-    background-color: #14967f; /* Teal background */
-    color: #fff; /* White text */
-    border: none; /* Remove default border */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth transition */
-}
+        .search-bar button {
+            padding: 4px 15px; /* Padding for search button */
+            margin-left: 10px; /* Space between input and button */
+            background-color: #14967f; /* Teal background */
+            color: #fff; /* White text */
+            border: none; /* Remove default border */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            transition: background-color 0.3s ease; /* Smooth transition */
+        }
 
-.search-bar button:hover {
-    background-color: #0e7b5e; /* Darker teal on hover */
-}
-
+        .search-bar button:hover {
+            background-color: #0e7b5e; /* Darker teal on hover */
+        }
 
         /* Patient Table */
         .patient-table {
@@ -166,11 +168,6 @@
                 margin-left: 0;
             }
 
-            .container mt-5 {
-            background-color: #14967f; /* Teal background for header */
-            color: #fff; /* White text */
-            }
-
             /* Table Box Styles */
             .table-box {
                 width: 80%; /* Adjust the width as needed */
@@ -221,16 +218,16 @@
     {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for msg in messages %}
-                   {{msg}}
+                   {{ msg }}
             {% endfor %}
         {% endif %}
     {% endwith %}
     {% for item in values %}
-       <p> Name : {{item.first_name}}  {{item.last_name}} , Email : {{item.email}} , Insurance Number : {{item.insurance_number}} , Admission Date : {{item.admission_date}}</p>
+       <p> Name : {{ item.first_name }} {{ item.last_name }} , Email : {{ item.email }} , Insurance Number : {{ item.insurance_number }} , Admission Date : {{ item.admission_date }}</p>
     {% endfor %}
     <div class="alerts-container"></div>
     <!-- Sidebar Navigation Bar with Background Image --> 
-    <nav class="sidebar" style="display: flex; flex-direction: column; justify-content: space-between; height: 100vh; background-size: cover; background-position: center;">
+    <nav class="sidebar">
         <div>
             <ul class="navbar-nav">
                 <a href="#" class="navbar-brand">EHR System</a>
@@ -248,8 +245,6 @@
         <button id="searchButton">Search</button>
     </div>
 
-
-
     <!-- Patient Table -->
     <div class="table-box">
         <div class="container mt-5">
@@ -260,32 +255,10 @@
                 <form action="" id="patient-form" class="row justify-content-center mb-4" autocomplete="off">
                     <div class="col-8 mt-5" style="color: #f1f9ff">
                         <table class="table table-striped">
-                            <thread>
+                            <thead>
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Insurance Number</th>
                                 <th>Actions</th>
-                            </tr> 
-                            </thread>
-                            <tbody id="patient-list">
-                                <tr>
-                                    <td>John</td>
-                                    <td>Doe</td>
-                                    <td>12345</td>
-                                    <td>
-                                        <a href="#" class="btn btn-warning btn-sm edit">Edit</a>
-                                        <a href="#" class="btn btn-danger btn-sm delete">Delete</a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-
-                </form> 
-            </div>
-        </div>
-        <script src="script.js"></script>
-    
-</body>
-</html>
+                            </tr>
