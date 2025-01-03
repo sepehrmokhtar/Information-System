@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient Information Form</title>
     <link href="../static/style-css-method.css" rel="stylesheet">
-    
 </head>
 <body>
     <div class="sidebar">
@@ -19,246 +18,179 @@
     <div class="main-content">
         <section class="hero">
             <h2>Add Patient</h2>
-            <form>
-                <!-- Doctor Details -->
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Comprehensive Form</title>
-                    <style>
-                        /* General Styling */
-                        .container {
-                            display: flex;
-                            flex-wrap: wrap;
-                            gap: 20px;
-                            width: 100%;
-                            max-width: 1200px;
-                            margin: auto;
-                        }
-                
-                        fieldset {
-                            border: 1px solid #ccc;
-                            border-radius: 8px;
-                            padding: 20px;
-                            flex: 0 1 calc(48% - 20px);
-                            box-sizing: border-box;
-                        }
-                
-                        legend {
-                            font-weight: bold;
-                        }
-                
-                        label {
-                            display: block;
-                            margin-bottom: 10px;
-                            font-size: 14px;
-                        }
-                
-                        input, select, textarea {
-                            width: 100%;
-                            padding: 8px;
-                            margin-bottom: 10px;
-                            border: 1px solid #ccc;
-                            border-radius: 4px;
-                            font-size: 14px;
-                            box-sizing: border-box;
-                        }
-                        
-                
-                        textarea {
-                            resize: none;
-                        }
-                
-                        .checkbox-group {
-                            display: flex;
-                            flex-direction: column;
-                            gap: 5px;
-                        }
-                
-                        /* Responsive Design */
-                        @media (max-width: 768px) {
-                            fieldset {
-                                flex: 0 1 100%;
-                            }
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <!-- Doctor Email -->
-                        <fieldset>
-                            <legend>Doctor Details</legend>
-                            <label for="doctor-email">Doctor E-mail:</label>
-                            <textarea type="email" id="doctor-email" name="doctor-email">{{doctor_email}}</textarea>
-                
-                            <label for="admission-date">Admission Date:</label>
-                            <input type="date" id="admission-date" name="admission-date"  value="{{ admission_date }}">
-                        </fieldset>
-                
-                        <!-- Patient Basic Information -->
-                        <fieldset>
-                            <legend>Patient Basic Information</legend>
-                            <label for="first-name">First Name:</label>
-                            <input type="text" id="first-name" name="first-name" value="{{ firstname }}">
-                
-                            <label for="last-name">Last Name:</label>
-                            <input type="text" id="last-name" name="last-name" value="{{ lastname }}">
-                
-                            <label for="insurance-number">Insurance Number:</label>
-                            <input type="text" id="insurance-number" name="insurance-number" value="{{ insurance_number }}">
-                
-                            <label for="phone-number">Phone Number:</label>
-                            <input type="tel" id="phone-number" name="phone-number" value="{{ phone_number }}">
+            <form action="{{ url_for('add_patient') }}" method="POST">
+                <div class="container">
+                    <!-- Doctor Details -->
+                    <fieldset>
+                        <legend>Doctor Details</legend>
+                        <label for="doctor-email">Doctor E-mail:</label>
+                        <textarea type="email" id="doctor-email" name="doctor-email">{{doctor_email}}</textarea>
 
-                            <label for="address">Address:</label>
-                            <textarea id="address" name="address" rows="3">{{address}}</textarea>
+                        <label for="admission-date">Admission Date:</label>
+                        <input type="date" id="admission-date" name="admission-date" value="{{ admission_date }}">
+                    </fieldset>
 
-                            <label for="email">E-mail:</label>
-                            <textarea id="email" name="email">{{patient_email}}</textarea>
-                        </fieldset>
-                
-                        <!-- Demographic Information -->
-                        <fieldset>
-                            <legend>Demographic Information</legend>
-                            <label for="gender">Gender:</label>
-                            <select id="gender" name="gender">
-                                <option value="male" {% if gender == 'male' %}selected{% endif %}>Male</option>
-                                <option value="female" {% if gender == 'female' %}selected{% endif %}>Female</option>
-                                <option value="other" {% if gender == 'other' %}selected{% endif %}>Other</option>
-                            </select>
+                    <!-- Patient Basic Information -->
+                    <fieldset>
+                        <legend>Patient Basic Information</legend>
+                        <label for="first-name">First Name:</label>
+                        <input type="text" id="first-name" name="first-name" value="{{ firstname }}">
 
+                        <label for="last-name">Last Name:</label>
+                        <input type="text" id="last-name" name="last-name" value="{{ lastname }}">
 
-                            <label for="age">Age:</label>
-                            <input type="number" id="age" name="age" value="{{ age }}">
-                
-                            <label for="race">Race:</label>
-                            <input type="text" id="race" name="race" value="{{ race }}">
+                        <label for="insurance-number">Insurance Number:</label>
+                        <input type="text" id="insurance-number" name="insurance-number" value="{{ insurance_number }}">
 
-                
-                            <label for="family-status">Family Status:</label>
-                            <input type="text" id="family-status" name="family-status" value="{{ family_status }}">
-                
-                            <label for="occupation">Occupation:</label>
-                            <input type="text" id="occupation" name="occupation" value="{{ occupation }}">
-                
-                            <label for="height">Height:</label>
-                            <input type="text" id="height" name="height" value="{{ height }}">
-                
-                            <label for="weight">Weight:</label>
-                            <input type="text" id="weight" name="weight" value="{{ weight }}">
-                        </fieldset>
-                
-                        <!-- Vital Signs -->
-                        <fieldset>
-                            <legend>Vital Signs</legend>
-                            <label for="core-temp">Core Temperature:</label>
-                            <input type="text" id="core-temp" name="core-temp" value="{{ core_temp }}">
-                
-                            <label for="heart-rate">Heart Rate:</label>
-                            <input type="text" id="heart-rate" name="heart-rate" value="{{ heart_rate }}">
-                
-                            <label for="respiratory-rate">Respiratory Rate:</label>
-                            <input type="text" id="respiratory-rate" name="respiratory-rate" value="{{ respiratory_rate }}">
-                
-                            <label for="blood-oxygen">Blood Oxygen:</label>
-                            <input type="text" id="blood-oxygen" name="blood-oxygen" value="{{ blood_oxygen }}">
-                
-                            <label for="blood-pressure">Blood Pressure:</label>
-                            <input type="text" id="blood-pressure" name="blood-pressure" value="{{ blood_pressure }}">
-                        </fieldset>
-                
-                        <!-- Immunization Status -->
-                        <fieldset>
-                            <legend>Immunization Status</legend>
-                            <div class="checkbox-group">
-                                <label><input type="checkbox" name="immunization-status" value="Hepatitis A" {% if 'Hepatitis A' in immunization_status %}checked{% endif %}> Hepatitis A</label>
-                                <label><input type="checkbox" name="immunization-status" value="Hepatitis B" {% if 'Hepatitis B' in immunization_status %}checked{% endif %}> Hepatitis B</label>
-                                <label><input type="checkbox" name="immunization-status" value="HPV" {% if 'HPV' in immunization_status %}checked{% endif %}> HPV</label>
-                                <label><input type="checkbox" name="immunization-status" value="Flu" {% if 'Flu' in immunization_status %}checked{% endif %}> Flu</label>
-                                <label><input type="checkbox" name="immunization-status" value="Yellow Fever" {% if 'Yellow Fever' in immunization_status %}checked{% endif %}> Yellow Fever</label>
-                            </div>
-                        </fieldset>
+                        <label for="phone-number">Phone Number:</label>
+                        <input type="tel" id="phone-number" name="phone-number" value="{{ phone_number }}">
 
-                        <!-- Medical History -->
-                        <fieldset>
-                            <legend>Medical History</legend>
-                            <label for="disease-history">Disease History:</label>
-                            <textarea id="disease-history" name="disease-history" rows="4">{{disease_history}}</textarea>
-                
-                            <label for="family-history">Family History:</label>
-                            <textarea id="family-history" name="family-history" rows="3">{{family_history}}</textarea>
-                        </fieldset>
-                
-                        <!-- Laboratory Test Results -->
-                        <fieldset>
-                            <legend>Laboratory Test Results</legend>
-                            <label for="wbc">WBC K/μl:</label>
-                            <input type="text" id="wbc" name="wbc" value="{{ wbc }}">
-                            <label for="rbc">RBC million/mm3:</label>
-                            <input type="text" id="rbc" name="rbc" value="{{ rbc }}">
-                            <label for="hco3">HCO3 mEq/L:</label>
-                            <input  type="text"id="hco3" name="hco3" value="{{ hco3 }}">
-                            <label for="glucose">Glucose mg/dL:</label>
-                            <input type="text" id="glucose" name="glucose" value="{{ glucose }}">
-                        </fieldset>
-                
-                        <!-- Allergies and Habits -->
-                        <fieldset>
-                            <legend>Allergies and Habits</legend>
-                            <label for="food-allergy">Food Allergy:</label>
-                            <textarea id="food-allergy" name="food-allergy" rows="3">{{food_allergy}}</textarea>
-                            <label for="medication-allergy">Medication Allergy:</label>
-                            <textarea id="medication-allergy" name="medication-allergy" rows="3">{{medication_allergy}}</textarea>
-                            <label for="other-allergy">Other Allergy:</label>
-                            <textarea id="other-allergy" name="other-allergy" rows="3">{{other_allergies}}</textarea>
-                
-                            <label>Smoking History:</label>
-                            <div>
-                                <label><input type="radio" name="smoking-history" value="yes" {% if smoking_history == 'yes' %}checked{% endif %}> Yes</label>
-                                <label><input type="radio" name="smoking-history" value="no" {% if smoking_history == 'no' %}checked{% endif %}> No</label>
-                            </div>
+                        <label for="address">Address:</label>
+                        <textarea id="address" name="address" rows="3">{{address}}</textarea>
 
-                            <label>Alcohol History:</label>
-                            <div>
-                                <label><input type="radio" name="alcohol-history" value="yes" {% if alcohol_history == 'yes' %}checked{% endif %}> Yes</label>
-                                <label><input type="radio" name="alcohol-history" value="no" {% if alcohol_history == 'no' %}checked{% endif %}> No</label>
-                            </div>
-                        </fieldset>
-                
-                        <!-- Review of Systems (ROS) -->
-                        <fieldset>
-                            <legend>Review of Systems (ROS)</legend>
-                            <textarea id="general" name="general" rows="3">{{ros}}</textarea>
-                        </fieldset>
+                        <label for="email">E-mail:</label>
+                        <textarea id="email" name="email">{{patient_email}}</textarea>
+                    </fieldset>
 
-                        <!-- medication history -->
+                    <!-- Demographic Information -->
+                    <fieldset>
+                        <legend>Demographic Information</legend>
+                        <label for="gender">Gender:</label>
+                        <select id="gender" name="gender">
+                            <option value="male" {% if gender == 'male' %}selected{% endif %}>Male</option>
+                            <option value="female" {% if gender == 'female' %}selected{% endif %}>Female</option>
+                            <option value="other" {% if gender == 'other' %}selected{% endif %}>Other</option>
+                        </select>
 
-                        <fieldset>
-                            <legend>Medication History</legend>
-                            <label for="current_med_name">Current Medication:</label>
-                            <textarea id="current_med_name" name="current_med_name" rows="3">{{current_med_name}}</textarea>
-                            <label for="current_med_frequency">Medication Frequency:</label>
-                            <textarea id="current_med_frequency" name="current_med_frequency" rows="3">{{current_med_frequency}}</textarea>
-                            <label for="current_med_dosage">Medication Dosage:</label>
-                            <textarea id="current_med_dosage" name="current_med_dosage" rows="3">{{current_med_dosage}}</textarea>
-                            <label for="past-medication">Past Medication:</label>
-                            <textarea id="past-medication" name="past-medication" rows="3">{{past_medication}}</textarea>
-                        </fieldset>
-                        <!-- history of present illness -->
-                        <fieldset>
-                            <legend>History Of Present Illness</legend>
-                            <label for="chief-complaint">Chief Complaint</label>
-                            <textarea id="chief-complaint" name="chief-complaint" rows="3">{{cc}}</textarea>
-                            <label for="soap-notes">SOAP Notes:</label>
-                            <textarea id="soap-notes" name="soap-notes" rows="3">{{soap}}</textarea>
-                        </fieldset>
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" value="{{ age }}">
 
-                
-                    </div>
-                    <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                        <button type="submit">Submit</button>
-                    </div>                    
-                </body>
-                </html>
+                        <label for="race">Race:</label>
+                        <input type="text" id="race" name="race" value="{{ race }}">
+
+                        <label for="family-status">Family Status:</label>
+                        <input type="text" id="family-status" name="family-status" value="{{ family_status }}">
+
+                        <label for="occupation">Occupation:</label>
+                        <input type="text" id="occupation" name="occupation" value="{{ occupation }}">
+
+                        <label for="height">Height:</label>
+                        <input type="text" id="height" name="height" value="{{ height }}">
+
+                        <label for="weight">Weight:</label>
+                        <input type="text" id="weight" name="weight" value="{{ weight }}">
+                    </fieldset>
+
+                    <!-- Vital Signs -->
+                    <fieldset>
+                        <legend>Vital Signs</legend>
+                        <label for="core-temp">Core Temperature:</label>
+                        <input type="text" id="core-temp" name="core-temp" value="{{ core_temp }}">
+
+                        <label for="heart-rate">Heart Rate:</label>
+                        <input type="text" id="heart-rate" name="heart-rate" value="{{ heart_rate }}">
+
+                        <label for="respiratory-rate">Respiratory Rate:</label>
+                        <input type="text" id="respiratory-rate" name="respiratory-rate" value="{{ respiratory_rate }}">
+
+                        <label for="blood-oxygen">Blood Oxygen:</label>
+                        <input type="text" id="blood-oxygen" name="blood-oxygen" value="{{ blood_oxygen }}">
+
+                        <label for="blood-pressure">Blood Pressure:</label>
+                        <input type="text" id="blood-pressure" name="blood-pressure" value="{{ blood_pressure }}">
+                    </fieldset>
+
+                    <!-- Immunization Status -->
+                    <fieldset>
+                        <legend>Immunization Status</legend>
+                        <div class="checkbox-group">
+                            <label><input type="checkbox" name="immunization-status" value="Hepatitis A" {% if 'Hepatitis A' in immunization_status %}checked{% endif %}> Hepatitis A</label>
+                            <label><input type="checkbox" name="immunization-status" value="Hepatitis B" {% if 'Hepatitis B' in immunization_status %}checked{% endif %}> Hepatitis B</label>
+                            <label><input type="checkbox" name="immunization-status" value="HPV" {% if 'HPV' in immunization_status %}checked{% endif %}> HPV</label>
+                            <label><input type="checkbox" name="immunization-status" value="Flu" {% if 'Flu' in immunization_status %}checked{% endif %}> Flu</label>
+                            <label><input type="checkbox" name="immunization-status" value="Yellow Fever" {% if 'Yellow Fever' in immunization_status %}checked{% endif %}> Yellow Fever</label>
+                        </div>
+                    </fieldset>
+
+                    <!-- Medical History -->
+                    <fieldset>
+                        <legend>Medical History</legend>
+                        <label for="disease-history">Disease History:</label>
+                        <textarea id="disease-history" name="disease-history" rows="4">{{disease_history}}</textarea>
+
+                        <label for="family-history">Family History:</label>
+                        <textarea id="family-history" name="family-history" rows="3">{{family_history}}</textarea>
+                    </fieldset>
+
+                    <!-- Laboratory Test Results -->
+                    <fieldset>
+                        <legend>Laboratory Test Results</legend>
+                        <label for="wbc">WBC K/μl:</label>
+                        <input type="text" id="wbc" name="wbc" value="{{ wbc }}">
+                        <label for="rbc">RBC million/mm3:</label>
+                        <input type="text" id="rbc" name="rbc" value="{{ rbc }}">
+                        <label for="hco3">HCO3 mEq/L:</label>
+                        <input type="text" id="hco3" name="hco3" value="{{ hco3 }}">
+                        <label for="glucose">Glucose mg/dL:</label>
+                        <input type="text" id="glucose" name="glucose" value="{{ glucose }}">
+                    </fieldset>
+
+                    <!-- Allergies and Habits -->
+                    <fieldset>
+                        <legend>Allergies and Habits</legend>
+                        <label for="food-allergy">Food Allergy:</label>
+                        <textarea id="food-allergy" name="food-allergy" rows="3">{{food_allergy}}</textarea>
+                        <label for="medication-allergy">Medication Allergy:</label>
+                        <textarea id="medication-allergy" name="medication-allergy" rows="3">{{medication_allergy}}</textarea>
+                        <label for="other-allergy">Other Allergy:</label>
+                        <textarea id="other-allergy" name="other-allergy" rows="3">{{other_allergies}}</textarea>
+
+                        <label>Smoking History:</label>
+                        <div>
+                            <label><input type="radio" name="smoking-history" value="yes" {% if smoking_history == 'yes' %}checked{% endif %}> Yes</label>
+                            <label><input type="radio" name="smoking-history" value="no" {% if smoking_history == 'no' %}checked{% endif %}> No</label>
+                        </div>
+
+                        <label>Alcohol History:</label>
+                        <div>
+                            <label><input type="radio" name="alcohol-history" value="yes" {% if alcohol_history == 'yes' %}checked{% endif %}> Yes</label>
+                            <label><input type="radio" name="alcohol-history" value="no" {% if alcohol_history == 'no' %}checked{% endif %}> No</label>
+                        </div>
+                    </fieldset>
+
+                    <!-- Review of Systems (ROS) -->
+                    <fieldset>
+                        <legend>Review of Systems (ROS)</legend>
+                        <textarea id="general" name="general" rows="3">{{ros}}</textarea>
+                    </fieldset>
+
+                    <!-- Medication History -->
+                    <fieldset>
+                        <legend>Medication History</legend>
+                        <label for="current_med_name">Current Medication:</label>
+                        <textarea id="current_med_name" name="current_med_name" rows="3">{{current_med_name}}</textarea>
+                        <label for="current_med_frequency">Medication Frequency:</label>
+                        <textarea id="current_med_frequency" name="current_med_frequency" rows="3">{{current_med_frequency}}</textarea>
+                        <label for="current_med_dosage">Medication Dosage:</label>
+                        <textarea id="current_med_dosage" name="current_med_dosage" rows="3">{{current_med_dosage}}</textarea>
+                        <label for="past-medication">Past Medication:</label>
+                        <textarea id="past-medication" name="past-medication" rows="3">{{past_medication}}</textarea>
+                    </fieldset>
+
+                    <!-- History of Present Illness -->
+                    <fieldset>
+                        <legend>History Of Present Illness</legend>
+                        <label for="chief-complaint">Chief Complaint:</label>
+                        <textarea id="chief-complaint" name="chief-complaint" rows="3">{{cc}}</textarea>
+                        <label for="soap-notes">SOAP Notes:</label>
+                        <textarea id="soap-notes" name="soap-notes" rows="3">{{soap}}</textarea>
+                    </fieldset>
+                </div>
+                <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+                    <button type="submit">Submit</button>
+                </div>
+            </form>
+        </section>
+    </div>
+</body>
+</html>
