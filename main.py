@@ -100,7 +100,7 @@ class PatientMedInfo(db.Model):
     blood_pressure = db.Column('blood_pressure', db.Integer, nullable=False)
     disease_history = db.Column('disease_history', db.Text, nullable=True)
     family_history = db.Column('family_history', db.Text, nullable=True)
-    immunization_stats = db.Column('immunization_status', db.Text, nullable=True)
+    immunization_status = db.Column('immunization_status', db.Text, nullable=True)
     food_allergies = db.Column('food_allergies', db.String(200), nullable=True)
     medication_allergies = db.Column('medication_allergies', db.String(200), nullable=True)
     other_allergies = db.Column('other_allergies', db.String(200), nullable=True)
@@ -135,7 +135,7 @@ class PatientMedInfo(db.Model):
         self.blood_pressure = blood_pressure
         self.disease_history = disease_history
         self.family_history = family_history
-        self.immunization_stats = immunization_stats
+        self.immunization_status = immunization_status
         self.food_allergies = food_allergies
         self.medication_allergies = medication_allergies
         self.other_allergies = other_allergies
