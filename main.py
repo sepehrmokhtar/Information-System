@@ -118,14 +118,13 @@ class PatientMedInfo(db.Model):
     soap_notes = db.Column('soap_notes', db.Text, nullable=True)
     ros = db.Column('ros', db.Text, nullable=True)
 
-    def __init__(self, patient_med_info_id, patient_id, height, weight, heart_rate, respiratory_rate, core_temperature,
+    def __init__(self, patient_id, height, weight, heart_rate, respiratory_rate, core_temperature,
                  blood_oxygen, blood_pressure, disease_history=None, family_history=None,
                  immunization_stats=None, food_allergies=None, medication_allergies=None,
                  other_allergies=None, smoking_history=False, alcoholic=False, current_med_name=None,
                  current_med_dosage=None, current_med_frequency=None, past_medication=None,
                  wbc=None, rbc=None, hco3=None, glucose=None, chief_complaint=None, soap_notes=None,
                  ros=None):
-        self.patient_med_info_id = patient_med_info_id
         self.patient_id = patient_id
         self.height = height
         self.weight = weight
@@ -284,26 +283,40 @@ def add_patient():
 
         json_stored_immunization_status = json.dumps(immunization_status)
 
-        patient = Patient(firstname, lastname, patient_email, address, gender, age, race, insurance_number, phone_number,
-                          admission_date, doctor_email, family_status, occupation)
-
-        patient_med_info = PatientMedInfo(height, weight, core_temperature, heart_rate, respiratory_rate, blood_oxygen,
-                                          blood_pressure, disease_history, family_history, json_stored_immunization_status,
-                                          food_allergies, medication_allergies, other_allergies, smoking_history, alcoholic,
-                                          current_med_name, current_med_dosage, current_med_frequency, past_medication, wbc,
-                                          rbc, hco3, glucose, chief_complaint, soap_notes, ros)
         try:
+            patient = Patient(
+                firstname, lastname, patient_email, address, gender, age, race,
+                insurance_number, phone_number, admission_date, doctor_email,
+                family_status, occupation
+            )
             db.session.add(patient)
             db.session.commit()
 
+            patient_id = patient.patient_id
+
+            patient_med_info = PatientMedInfo(
+                patient_id,
+                height, weight, core_temperature,
+                heart_rate, respiratory_rate,
+                blood_oxygen, blood_pressure,
+                disease_history, family_history,
+                json_stored_immunization_status,
+                food_allergies, medication_allergies,
+                other_allergies, smoking_history,
+                alcoholic, current_med_name,
+                current_med_dosage,
+                current_med_frequency,
+                past_medication, wbc, rbc,
+                hco3, glucose, chief_complaint,
+                soap_notes, ros
+            )
             db.session.add(patient_med_info)
             db.session.commit()
 
             flash("New patient was successfully added.")
             return redirect(url_for("dashboard"))
-
         except Exception as e:
-            db.session.rollback()
+            db.session.rollback()  # Roll back on error
             flash(f"An error occurred while adding information: {str(e)}")
             return redirect(url_for("dashboard"))
 
