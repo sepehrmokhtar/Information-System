@@ -254,7 +254,7 @@
                     </form>
 
                     <!-- Update Button Inside a Form -->
-                    <form action="{{ url_for('update_patient') }}" method="POST" style="display:inline;">
+                    <form action="{{ url_for('update_patient') }}" method="GET" style="display:inline;">
                         <input type="hidden" name="patient_firstname" value="{{ patient.first_name }}">
                         <input type="hidden" name="patient_lastname" value="{{ patient.last_name }}">
                         <input type="hidden" name="patient_email" value="{{ patient.email }}">
