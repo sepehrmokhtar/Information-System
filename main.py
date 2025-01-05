@@ -1,12 +1,15 @@
 # MySQL database created in database.py
+import os
 import json
 import random
 import string
 from flask import Flask, render_template, redirect, url_for, request, session, flash
 from flask_sqlalchemy import SQLAlchemy
-from flask_mail import Mail, Message
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 from datetime import timedelta
 from werkzeug.security import generate_password_hash, check_password_hash # Used to hash passwords stored in database.
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://sql7746745:qVMtw78yWQ@sql7.freesqldatabase.com/sql7746745'
@@ -14,12 +17,12 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "12345678910" # In order to safely store session cookies.
 app.permanent_session_lifetime = timedelta(days=1)
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = 'signaleegapp@gmail.com'
-app.config['MAIL_PASSWORD'] = '12345678910*@'
-mail = Mail(app)
+load_dotenv()
+
+SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+SENDGRID_FROM_EMAIL = os.getenv(
+    "SENDGRID_FROM_EMAIL"
+)  # Reading the email configration from .env which is used Below to send email.
 
 db = SQLAlchemy(app)
 
@@ -487,18 +490,17 @@ def gen_token():
     token = ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
     session['token'] = token  # Generating a random token and save it in session
 
+    message = Mail(
+        from_email=SENDGRID_FROM_EMAIL,
+        to_emails=email,
+        subject='Your One-Time Password Change Token',
+        plain_text_content=f"Token:{token}",
+    )
     try:
-        msg = Message(
-            "Your One-Time Password Reset Token",
-            sender="signaleegapp@gmail.com",
-            recipients=[email]
-        )
-        msg.body = f"Your one-time password reset token is: {token}"
-        mail.send(msg) # Token is sent via email
-        flash("Token was sent to your email.")
+        sg = SendGridAPIClient(SENDGRID_API_KEY)
+        sg.send(message)
     except Exception as e:
-        print(e)
-        flash("Failed to send email. Please try again.")
+            flash(f"An error occurred while sending the token: {str(e)}")
 
     return redirect(url_for('forget_password'))
 
