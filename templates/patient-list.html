@@ -222,6 +222,11 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
+    {% for item in values %}
+        <p> Name : {{ item.first_name }} {{ item.last_name }} , Email : {{ item.email }} , Insurance Number : {{ item.insurance_number }} , Admission Date : {{ item.admission_date }}</p>
+    {% endfor %}
+    <div class="alerts-container"></div>
+
     <!-- Sidebar Navigation Bar with Background Image --> 
     <nav class="sidebar">
         <div>
