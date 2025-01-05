@@ -349,8 +349,10 @@ def delete_patient():
     patient_med_info = PatientMedInfo.query.filter_by(patient_id=patient_id).first() # Reference to patient_id (foreign key)
 
     try:
-        db.session.delete(patient)
         db.session.delete(patient_med_info)
+        db.session.commit()
+
+        db.session.delete(patient)
         db.session.commit()
         flash("Patient record was successfully deleted.")
         return redirect(url_for("view"))
@@ -366,7 +368,7 @@ def update_patient():
         flash("In order to edit patient and access your dashboard you need to login.")
         return redirect(url_for('login'))
 
-    email = request.form.get('patient_email')
+    email = request.args.get('patient_email') # For incoming GET request we need args.get
     patient = Patient.query.filter_by(email=email).first()
 
     patient_id = patient.patient_id
