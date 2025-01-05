@@ -70,37 +70,6 @@
             padding: 20px;
         }
 
-        .search-bar {
-            position: fixed;
-            top: 60px; /* Increase this value to push the search bar down */
-            right: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .search-bar input[type="text"] {
-            width: 70%; /* Set search bar width */
-            padding: 8px; /* Padding for search bar */
-            border: 1px solid #ccc; /* Light gray border */
-            border-radius: 5px; /* Rounded corners */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-        }
-
-        .search-bar button {
-            padding: 4px 15px; /* Padding for search button */
-            margin-left: 10px; /* Space between input and button */
-            background-color: #14967f; /* Teal background */
-            color: #fff; /* White text */
-            border: none; /* Remove default border */
-            border-radius: 5px; /* Rounded corners */
-            cursor: pointer; /* Pointer cursor on hover */
-            transition: background-color 0.3s ease; /* Smooth transition */
-        }
-
-        .search-bar button:hover {
-            background-color: #0e7b5e; /* Darker teal on hover */
-        }
-
         /* Patient Table */
         .patient-table {
             width: 100%; /* Full width of the page */
@@ -189,7 +158,7 @@
             /* Alert Styles */
             .alert {
                 position: fixed;
-                top: 10px;
+                top: 80px;
                 left: 50%;
                 transform: translateX(-50%);
                 padding: 10px 20px;
@@ -221,11 +190,6 @@
             {% endfor %}
         {% endif %}
     {% endwith %}
-    {% for item in values %}
-        <p> Name : {{ item.first_name }} {{ item.last_name }} , Email : {{ item.email }} , Insurance Number : {{ item.insurance_number }} , Admission Date : {{ item.admission_date }}</p>
-    {% endfor %}
-    <div class="alerts-container"></div>
-
     <!-- Sidebar Navigation Bar with Background Image --> 
     <nav class="sidebar">
         <div>
