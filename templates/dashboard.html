@@ -70,57 +70,40 @@
             padding: 20px; /* Padding inside the wrapper */
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
             margin-top: 20px; /* Space above the content */
-
-             /* To center the content horizontally */
             text-align: center;
-
-            /* Center the content vertically using flexbox */
             display: flex;
             justify-content: center;
             align-items: center;
+            height: 300px;
+            flex-direction: column;
+        }
 
-            /* Optional: If you want the content to be a certain height */
-            height: 300px;  /* Adjust as needed */
-            /* Use flexbox to center content */
-            display: flex;
-            flex-direction: column; /* Arrange elements vertically */
-            justify-content: center; /* Vertically center items */
-            align-items: center; /* Horizontally center items */
-            text-align: center; /* Center the text inside each heading */
-            height: 300px; /* Optional: adjust height based on your content */
-}
+        h1 {
+            font-size: 2em; /* Larger size for the first heading */
+            margin-bottom: 10px; /* Space between the two headings */
+        }
 
-h1 {
-    font-size: 2em; /* Larger size for the first heading */
-    margin-bottom: 10px; /* Space between the two headings */
-}
-
-h2 {
+        h2 {
             font-size: 1.5em; /* Smaller size for the second heading */
         }
 
-        /* Input Styles */
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="password"] {
-            width: 20%; /* Set to 20% width */
-            padding: 6px; /* Reduced padding */
-            border: 1px solid #ccc; /* Light gray border */
-            border-radius: 5px; /* Rounded corners */
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-            margin-bottom: 10px; /* Space between input fields */
-            font-size: 0.8em; /* Slightly smaller font size */
-            transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth transition */
+        /* Guidelines Section */
+        .guidelines {
+            background-color: #e2f1f8; /* Lighter blue background */
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
         }
 
-        input[type="text"]:focus,
-        input[type="email"]:focus,
-        input[type="tel"]:focus,
-        input[type="password"]:focus {
-            border-color: #14967f; /* Change border color on focus */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow effect on focus */
-            outline: none; /* Remove default outline */
+        .guidelines h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .guidelines p, .guidelines ul {
+            font-size: 1em;
+            line-height: 1.6;
         }
 
         /* Button Styles */
@@ -141,6 +124,13 @@ h2 {
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
         }
 
+        /* Logout Button Position */
+        .logout-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+        }
+
         /* Responsive Design */
         @media (max-width: 768px) {
             .sidebar {
@@ -159,10 +149,11 @@ h2 {
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             {% for msg in messages %}
-                   {{msg}}
+                {{ msg }}
             {% endfor %}
         {% endif %}
-    {% endwith %}
+        {% endwith %}
+        
         <nav class="sidebar">
             <div>
                 <ul class="navbar-nav">
@@ -173,20 +164,63 @@ h2 {
                 </ul>
             </div>
         </nav>
-    </body>
-    <body>
+
         <div class="main-content">
             <div class="content-wrapper">
-                <h1>Hello Doctor,</h1> <br><br>
-                <h2>Welcome to your Dashboard!</h2> 
+                <h1>Hello Doctor,</h1><br><br>
+                <h2>Welcome to your Dashboard!</h2>
             </div>
-            <br>
-            <br>
-            <!-- Logout Button with Inline CSS -->
-            <div style="position: absolute; bottom: 20px; right: 20px;">
-                <button onclick="window.location.href='../logout'" style="background-color: #14967f; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; font-size: 1em; cursor: pointer; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: background-color 0.3s ease, box-shadow 0.3s ease;">
-                Logout
-                </button>
+
+            <!-- Guidelines Section -->
+            <div class="guidelines">
+                <h3>Guidelines for Using the EHR Application</h3>
+                <p>This guide provides instructions for navigating and using the key features of the EHR system, including <strong>Add Patient</strong>, <strong>Patient List</strong>, <strong>Doctor Profile</strong>, and related functionalities.</p>
+                <hr>
+
+                <h4>1. Add Patient Page</h4>
+                <p>The <strong>Add Patient</strong> page is where doctors can add new patients to the system. Follow these steps:</p>
+                <ul>
+                    <li><strong>Doctor Details:</strong> Enter the doctor's email in the "Doctor E-mail" field. Use the calendar icon to set the patient's admission date.</li>
+                    <li><strong>Patient Basic Information:</strong> Fill in the fields for the patient's information.</li>
+                    <li><strong>Demographic Information:</strong> Select the patient's gender and provide the patient's age.</li>
+                    <li><strong>Vital Signs:</strong> Enter the patient's core temperature and heart rate.</li>
+                    <li><strong>Immunization Status:</strong> Check applicable vaccines.</li>
+                    <li><strong>Medical History:</strong> Add details about disease history and family history.</li>
+                    <li><strong>Laboratory Test Results:</strong> Fill in lab values like WBC, RBC, HCO3, Glucose.</li>
+                    <li><strong>Allergies and Habits:</strong> Enter allergy and habit information.</li>
+                    <li><strong>Medication History:</strong> Add details about current and past medications.</li>
+                    <li><strong>Review of Systems (ROS):</strong> Provide a comprehensive summary of the review of systems.</li>
+                    <li><strong>History of Present Illness:</strong> Include details like chief complaint and SOAP notes.</li>
+                </ul>
+
+                <h4>2. Patient List Page</h4>
+                <p>The <strong>Patient List</strong> page displays all registered patients. It allows you to manage patient records effectively:</p>
+                <ul>
+                    <li><strong>View Patient Profile:</strong> Click on a patient's name to view their full profile.</li>
+                    <li><strong>Edit Patient Information:</strong> Modify patient details by clicking the <strong>Edit</strong> button.</li>
+                    <li><strong>Delete Patient Record:</strong> Remove a patient record using the <strong>Delete</strong> button.</li>
+                </ul>
+
+                <h4>3. Doctor Profile Page</h4>
+                <p>The <strong>Doctor Profile</strong> page allows doctors to manage their information:</p>
+                <ul>
+                    <li><strong>View Profile:</strong> Review your details on the profile page.</li>
+                    <li><strong>Edit Information:</strong> Update your information like name, email, contact, and specialization.</li>
+                    <li><strong>Save Changes:</strong> Click <strong>Save</strong> to update your profile.</li>
+                </ul>
+
+                <h3>Tips for Effective Use:</h3>
+                <ul>
+                    <li><strong>Ensure Accuracy:</strong> Double-check information, especially medical details.</li>
+                    <li><strong>Handle Deletes Carefully:</strong> Deleting records is permanent.</li>
+                    <li><strong>Maintain Updates:</strong> Keep your profile updated to ensure accurate contact details.</li>
+                </ul>
+            </div>
+
+            <!-- Logout Button -->
+            <div class="logout-btn">
+                <button onclick="window.location.href='../logout'">Logout</button>
             </div>
         </div>
     </body> 
+</html>
