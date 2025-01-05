@@ -74,13 +74,13 @@
     <div class="main-content">
         <section class="hero">
             <h2>Add Patient</h2>
-            <form action="{{ url_for('add_patient') }}" method="POST">
+            <form action="{{ url_for('update_patient') }}" method="POST">
                 <div class="container">
                     <!-- Doctor Details -->
                     <fieldset>
                         <legend>Doctor Details</legend>
                         <label for="doctor-email">Doctor E-mail:</label>
-                        <textarea type="email" id="doctor-email" name="doctor_email">{{doctor_email}}</textarea>
+                        <textarea id="doctor-email" name="doctor_email">{{doctor_email}}</textarea>
 
                         <label for="admission-date">Admission Date:</label>
                         <input type="date" id="admission-date" name="admission-date" value="{{ admission_date }}">
@@ -243,7 +243,7 @@
                     </fieldset>
                 </div>
                 <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
-                    <button type="submit" onclick="submitForm('add')">Submit</button>
+                    <button type="submit" onclick="submitForm('update')">Update</button>
                 </div>
             </form>
         </section>

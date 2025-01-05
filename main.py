@@ -320,7 +320,7 @@ def add_patient():
             flash(f"An error occurred while adding information: {str(e)}")
             return redirect(url_for("dashboard"))
 
-    return render_template("add_patient.html", immunization_status=[])
+    return render_template("add_patient.html")
 
 
 @app.route('/dashboard/view-patient')
@@ -368,11 +368,16 @@ def update_patient():
         flash("In order to edit patient and access your dashboard you need to login.")
         return redirect(url_for('login'))
 
-    email = request.args.get('patient_email') # For incoming GET request we need args.get
-    patient = Patient.query.filter_by(email=email).first()
-
-    patient_id = patient.patient_id
-    patient_med_info = PatientMedInfo.query.filter_by(patient_id=patient_id).first()
+    email = request.args.get('patient_email') # For incoming GET request we need args.get (update button in patient list).
+    email_from_update_post = request.form.get("email") # For incoming POST request (update button in update-patient)
+    if email:
+        patient = Patient.query.filter_by(email=email).first()
+        patient_id = patient.patient_id
+        patient_med_info = PatientMedInfo.query.filter_by(patient_id=patient_id).first()
+    elif email_from_update_post:
+        patient = Patient.query.filter_by(email=email_from_update_post).first()
+        patient_id = patient.patient_id
+        patient_med_info = PatientMedInfo.query.filter_by(patient_id=patient_id).first()
 
     if request.method == "POST":
         # Direct Information
@@ -425,6 +430,7 @@ def update_patient():
         patient_med_info.ros = request.form['ros'] if 'ros' in request.form else patient_med_info.ros
 
         try:
+            patient_med_info.immunization_status = json.dumps(request.form.getlist('immunization-status'))
             db.session.commit()
             flash("Patient information was successfully edited.")
             return redirect(url_for("dashboard"))
@@ -435,7 +441,7 @@ def update_patient():
 
     stored_immunization_status = json.loads(patient_med_info.immunization_status) # Deserialized the stored immunization_status for use in the template.
 
-    return render_template("add_patient.html", doctor_email=patient.responsible_doctor, admission_date=patient.admission_date,
+    return render_template("update_patient.html", doctor_email=patient.responsible_doctor, admission_date=patient.admission_date,
                            firstname=patient.first_name, lastname=patient.last_name, patient_email=patient.email,
                            address=patient.address, insurance_number=patient.insurance_number, phone_number=patient.phone_number,
                            gender=patient.gender, race=patient.race, age=patient.age, family_status=patient.family_status, occupation=patient.occupation,
