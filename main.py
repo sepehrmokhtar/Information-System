@@ -120,7 +120,7 @@ class PatientMedInfo(db.Model):
 
     def __init__(self, patient_id, height, weight, heart_rate, respiratory_rate, core_temperature,
                  blood_oxygen, blood_pressure, disease_history=None, family_history=None,
-                 immunization_stats=None, food_allergies=None, medication_allergies=None,
+                 immunization_status=None, food_allergies=None, medication_allergies=None,
                  other_allergies=None, smoking_history=False, alcoholic=False, current_med_name=None,
                  current_med_dosage=None, current_med_frequency=None, past_medication=None,
                  wbc=None, rbc=None, hco3=None, glucose=None, chief_complaint=None, soap_notes=None,
@@ -320,7 +320,7 @@ def add_patient():
             flash(f"An error occurred while adding information: {str(e)}")
             return redirect(url_for("dashboard"))
 
-    return render_template("add_patient.html")
+    return render_template("add_patient.html", immunization_status=[])
 
 
 @app.route('/dashboard/view-patient')
@@ -328,8 +328,12 @@ def view():
     if not session.get('email'):
         flash("In order to see patients list and access your dashboard you need to login.")
         return redirect(url_for('login'))
+
+    email = session.get('email')
+    doctor = Doctor.query.filter_by(email=email).first()
+    doctor_email = doctor.email
     
-    return render_template("patient-list.html", patients=Patient.query.filter_by(responsible_doctor=session.get('email')).all())
+    return render_template("patient-list.html", patients=Patient.query.filter_by(responsible_doctor=doctor_email).all())
 
 
 @app.route('/dashboard/delete-patient', methods=['POST'])
