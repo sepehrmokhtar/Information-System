@@ -2,7 +2,7 @@ import mysql.connector
 
 # Establish a connection to the MySQL database
 connection = mysql.connector.connect(
-    host='sql7.freesqldatabase.com',       # MySQL host
+    host='sql7.freesqldatabase.com', # MySQL host
     user='sql7746745',   # MySQL username
     password='qVMtw78yWQ',  # MySQL password
     database='sql7746745'   # Connect to the database
